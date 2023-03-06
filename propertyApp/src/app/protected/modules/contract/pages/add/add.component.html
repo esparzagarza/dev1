@@ -1,0 +1,422 @@
+<div id="kt_app_content" class="app-content flex-column-fluid">
+  <div id="kt_app_content_container" class="app-container container-xxl">
+    <form (ngSubmit)="saveItem()">
+      <div class="d-flex flex-column flex-lg-row">
+        <div class="flex-lg-row-fluid me-lg-15 order-2 order-lg-1 mb-10 mb-lg-0">
+          <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+            <div class="d-flex flex-column gap-7 gap-lg-10">
+              <div class="card card-flush py-4">
+                <div class="card-header">
+                  <div class="card-title">
+                    <h2>General</h2>
+                  </div>
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row row-cols-1 row-cols-sm-3 rol-cols-md-1 row-cols-lg-3">
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root ">
+                        <label class="form-label required">Renta Mensual (importe)</label>
+                        <input type="number" min="0" step="1" class="form-control mb-2" id="subtotal"
+                          [(ngModel)]="heroe.subtotal" name="subtotal" required (keyup)="calculateTotal()" />
+                        <div class="text-muted fs-7">Establezca el valor antes de impuestos.
+                        </div>
+                        <br />
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Interes Moratorio</label>
+                        <input type="number" step="0.1" min="0" max="1" class="form-control mb-2" id="interestrate"
+                          [(ngModel)]="heroe.interestrate" name="interestrate" />
+                        <div class="text-muted fs-7">Establezca el valor desde 0 hasta 1</div>
+                        <br />
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Deposito en Garantía</label>
+                        <input type="number" min="0" step="1" class="form-control mb-2" id="guaranteedeposit"
+                          [(ngModel)]="heroe.guaranteedeposit" name="guaranteedeposit" />
+                        <div class="text-muted fs-7">Establezca el deposito en garantía
+                        </div>
+                        <br />
+                      </div>
+                    </div>
+                  </div>
+                  <div class='separator separator-dashed my-5'></div>
+
+                  <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label required">Moneda</label>
+                        <select class="form-select mb-2" data-control="select2" data-hide-search="true"
+                          data-placeholder="Select an option" [(ngModel)]="heroe.currency"
+                          [ngModelOptions]="{standalone: true}" (ngModelChange)="onChangeCurrency($event)" required>
+                          <option *ngFor="let item of allCurrency" value="{{ item.currency_code }}">{{
+                            item.currency_code }}
+                          </option>
+                        </select>
+                        <div class="text-muted fs-7">Establezca la moneda.</div>
+                        <br />
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Paridad (tipo de cambio)</label>
+                        <input type="number" step="1" min="1" max="1000" class="form-control mb-2" id="parity"
+                          [(ngModel)]="heroe.parity" name="parity" />
+                        <div class="text-muted fs-7">Establezca la paridad de la moneda (tipo de
+                          cambio).</div>
+                        <br />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label required">Impuesto</label>
+                        <select class="form-select mb-2" data-control="select2" data-hide-search="true"
+                          data-placeholder="Select an option" [(ngModel)]="heroe.taxname"
+                          [ngModelOptions]="{standalone: true}" (ngModelChange)="onChangeTax($event)" required>
+                          <option *ngFor="let item of allTax" value="{{ item.name }}">{{
+                            item.name }}
+                          </option>
+                        </select>
+                        <div class="text-muted fs-7">Establezca el impuesto.</div>
+                        <br />
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Tasa (monto del impuesto)</label>
+                        <input type="number" class="form-control mb-2" id="taxamount" [(ngModel)]="heroe.taxamount"
+                          name="taxamount" />
+                        <div class="text-muted fs-7">Establezca la tasa del impuesto.<br />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class='separator separator-dashed my-5'></div>
+
+                  <div class="row row-cols-1 row-cols-sm-3 rol-cols-md-1 row-cols-lg-3">
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label required">Fecha de Inicio</label>
+                        <input type="date" class="form-control mb-2" id="startdate" [(ngModel)]="heroe.startdate"
+                          name="startdate" required />
+                        <div class="text-muted fs-7">Establezca la fecha de inicio.</div>
+                        <br />
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label required">Fecha de Finalización</label>
+                        <input type="date" class="form-control mb-2" id="enddate" [(ngModel)]="heroe.enddate"
+                          name="enddate" required />
+                        <div class="text-muted fs-7">Establezca la fecha de finalización.</div>
+                        <br />
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Duración en Meses</label>
+                        <select class="form-select mb-2" data-control="select2" data-hide-search="true"
+                          data-placeholder="Select an option" [(ngModel)]="heroe.duration"
+                          [ngModelOptions]="{standalone: true}">
+                          <option *ngFor="let item of modules.saledurations" value="{{ item }}">{{ item }} meses
+                          </option>
+                        </select>
+                        <div class="text-muted fs-7">Establezca el tipo de contrato.
+                        </div>
+                        <br />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row row-cols-1 row-cols-sm-3 rol-cols-md-1 row-cols-lg-3">
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Asignar día de Pago</label>
+                        <input type="number" step="1" min="1" max="31" class="form-control mb-2" id="day"
+                          [(ngModel)]="heroe.day" name="day" />
+                        <div class="text-muted fs-7">Establezca el día de Pago, desde 1 hasta
+                          31.
+                        </div>
+                        <br />
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Días de Tolerancia</label>
+                        <input type="number" step="1" min="1" max="31" class="form-control mb-2" id="daysoftolerance"
+                          [(ngModel)]="heroe.daysoftolerance" name="daysoftolerance" />
+                        <div class="text-muted fs-7">Establezca los dias de tolerancia para
+                          recalcular el interes moratorio</div>
+                        <br />
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Tipo de Contrato</label>
+                        <select class="form-select mb-2" data-control="select2" data-hide-search="true"
+                          data-placeholder="Select an option" [(ngModel)]="heroe.type"
+                          [ngModelOptions]="{standalone: true}">
+                          <option *ngFor="let item of modules.saletypes" value="{{ item }}">{{
+                            item | titlecase }}</option>
+                        </select>
+                        <div class="text-muted fs-7">Establezca el tipo de contrato.
+                        </div>
+                        <br />
+                      </div>
+                    </div>
+                  </div>
+                  <div class='separator separator-dashed my-5'></div>
+
+                  <div class="mb-10 fv-row">
+                    <label class="form-label" for="comments">Claúsulas especiales</label>
+                    <textarea rows="4" id="comments" [(ngModel)]="heroe.comments" name="comments"
+                      class="form-control mb-2" placeholder="Dirección completa para el Inmueble"></textarea>
+                    <div class="text-muted fs-7">Enliste las claúsulas especiales, opcional.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex-column flex-lg-row-auto w-100 w-lg-250px w-xl-300px mb-10 order-1 order-lg-2">
+          <div class="card card-flush pt-3 mb-0" data-kt-sticky="true" data-kt-sticky-name="subscription-summary"
+            data-kt-sticky-offset="{default: false, lg: '200px'}" data-kt-sticky-width="{lg: '250px', xl: '300px'}"
+            data-kt-sticky-left="auto" data-kt-sticky-top="150px" data-kt-sticky-animation="false"
+            data-kt-sticky-zindex="95">
+            <div class="card-header">
+              <div class="card-title">
+                <h2>Personas</h2>
+              </div>
+            </div>
+            <div class="card-body pt-0 fs-6">
+              <div data-kt-search-element="empty" class="text-center">
+                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_customer_search"
+                  (click)="resetModalEnte()">Seleccione
+                  Inquilino</a>
+                <div class="text-center px-4" *ngIf="!selectedEnte">
+                  <img src="assets/media/illustrations/sketchy-1/4.png" alt="" class="mw-100 mh-200px" />
+                </div>
+              </div>
+              <div class="mb-7 text-center" *ngIf="selectedEnte"><br />
+                <div class="symbol symbol-60px symbol-circle me-3">
+                  <img alt="Pic" [src]="baseUrl +  selectedEnte.image" />
+                </div>
+                <br />
+                <a [routerLink]="['../../../administracion-de-inquilinos', selectedEnte.id]"
+                  class="fw-bold text-gray-800 text-hover-primary">{{
+                  selectedEnte.name }}</a>
+                <br />
+                <span class="badge badge-light-success">{{ selectedEnte.status | titlecase
+                  }}</span>
+              </div>
+              <div data-kt-search-element="empty" class="text-center">
+                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_property_search"
+                  (click)="resetModalProperty()">Seleccione
+                  Inmueble</a>
+                <div class="text-center px-4" *ngIf="!selectedProperty">
+                  <img src="assets/media/illustrations/sketchy-1/4.png" alt="" class="mw-100 mh-200px" />
+                </div>
+              </div>
+              <div class="mb-7 text-center" *ngIf="selectedProperty"><br />
+                <div class="symbol symbol-60px symbol-circle me-3">
+                  <img alt="Pic" [src]="baseUrl +  selectedProperty.image" />
+                </div>
+                <br />
+                <a [routerLink]="['../../../administracion-de-inmuebles', selectedProperty.id]"
+                  class="fw-semibold text-gray-600 text-hover-primary">{{
+                  selectedProperty.code
+                  }}</a>
+                <br />
+                <span class="badge badge-light-success">{{ selectedProperty.status | titlecase
+                  }}</span>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="card card-flush pt-3 mb-0" data-kt-sticky="true" data-kt-sticky-name="subscription-summary"
+            data-kt-sticky-offset="{default: false, lg: '200px'}" data-kt-sticky-width="{lg: '250px', xl: '300px'}"
+            data-kt-sticky-left="auto" data-kt-sticky-top="150px" data-kt-sticky-animation="false"
+            data-kt-sticky-zindex="95">
+            <div class="card-header">
+              <div class="card-title">
+                <h2>Total</h2>
+              </div>
+            </div>
+            <div class="card-body pt-0 fs-6">
+              <div class="mb-7 text-center">
+                <h3 class="mb-3">
+                  {{ heroe.total | currency }}
+                </h3>
+                <span class="fw-semibold text-gray-600 text-hover-primary">{{ heroe.currency }}</span>
+              </div>
+            </div>
+            <div class="card-footer pt-0">
+              <div class="d-flex justify-content-end">
+                <a [routerLink]="['app/administracion-de-contratos']" class="btn btn-light me-5">Cancel</a>
+                <button type="submit" class="btn btn-primary">
+                  <span class="indicator-label">Crear</span>
+                  <span class="indicator-progress">Un momento porfavor...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="modal fade" id="kt_modal_customer_search" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered mw-650px">
+        <div class="modal-content">
+          <div class="modal-header pb-0 border-0 justify-content-end">
+            <button #closeModalEnte class="close btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+              <span class="svg-icon svg-icon-1">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                    fill="currentColor" />
+                  <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                    fill="currentColor" />
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+            <div class="text-center mb-12">
+              <h1 class="fw-bold mb-3">Buscar Inquilino</h1>
+              <div class="text-gray-400 fw-semibold fs-5">Agregar Inquilino al contrato</div>
+            </div>
+            <div id="kt_modal_customer_search_handler" data-kt-search-keypress="true" data-kt-search-min-length="2"
+              data-kt-search-enter="enter" data-kt-search-layout="inline">
+              <input type="text" class="form-control form-control-lg form-control-solid px-15"
+                placeholder="Nombre, Correo..." (keyup.enter)="searchItem()" #txtSearchItem>
+              <span class="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-5"
+                data-kt-search-element="spinner">
+                <span class="spinner-border h-15px w-15px align-middle text-gray-400"></span>
+              </span>
+              <div class="py-5">
+                <div data-kt-search-element="suggestions" *ngIf="modalEnte.length == 0">
+                  <div class="text-center px-4 pt-10">
+                    <img src="assets/media/illustrations/sketchy-1/4.png" alt="" class="mw-100 mh-200px" />
+                  </div>
+                </div>
+                <div data-kt-search-element="results" *ngIf="modalEnte.length > 0">
+                  <div class="mh-300px scroll-y me-n5 pe-5" *ngFor="let item of modalEnte"
+                    (click)="setSelectedEnte(item)">
+                    <div
+                      class="d-flex align-items-center p-3 rounded-3 border-hover border border-dashed border-gray-300 cursor-pointer mb-1"
+                      data-kt-search-element="customer">
+                      <div class="symbol symbol-35px symbol-circle me-5">
+                        <img [src]="baseUrl +  item.image" />
+                      </div>
+                      <div class="fw-semibold">
+                        <span class="fs-6 text-gray-800 me-2">{{ item.name }}</span>
+                        <span class="badge badge-light">{{ item.email }}</span>
+                        <span class="badge badge-info">{{ item.phone }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div data-kt-search-element="empty" class="text-center" *ngIf="modalEnte.length == 0">
+                  <div class="fw-semibold py-0 mb-10">
+                    <div class="text-gray-600 fs-3 mb-2">No se han encontrado inquilinos
+                    </div>
+                    <div class="text-gray-400 fs-6">Buscar cliente por nombre completo o
+                      correo...
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="fw-semibold">
+                <label class="fs-6">Crear nuevo Inquilino</label>
+              </div>
+              <a (click)="closeModal()" [routerLink]="['../../administracion-de-inquilinos', 'add']"
+                class="btn btn-primary btn-sm"> +
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="kt_modal_property_search" tabindex="-2" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered mw-650px">
+        <div class="modal-content">
+          <div class="modal-header pb-0 border-0 justify-content-end">
+            <button #closeModalProperty class="close btn btn-icon btn-sm btn-active-icon-primary"
+              data-bs-dismiss="modal">
+              <span class="svg-icon svg-icon-1">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                    fill="currentColor" />
+                  <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                    fill="currentColor" />
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+            <div class="text-center mb-12">
+              <h1 class="fw-bold mb-3">Buscar Inmueble</h1>
+              <div class="text-gray-400 fw-semibold fs-5">Agregar Inmueble al contrato</div>
+            </div>
+            <div id="kt_modal_property_search_handler" data-kt-search-keypress="true" data-kt-search-min-length="2"
+              data-kt-search-enter="enter" data-kt-search-layout="inline">
+              <input type="text" class="form-control form-control-lg form-control-solid px-15"
+                placeholder="Buscar Inmueble por direccion o código..." (keyup.enter)="searchProperty()"
+                #txtSearchProperty>
+              <span class="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-5"
+                data-kt-search-element="spinner">
+                <span class="spinner-border h-15px w-15px align-middle text-gray-400"></span>
+              </span>
+              <div class="py-5">
+                <div data-kt-search-element="suggestions" *ngIf="modalProperty.length == 0">
+                  <div class="text-center px-4 pt-10">
+                    <img src="assets/media/illustrations/sketchy-1/4.png" alt="" class="mw-100 mh-200px" />
+                  </div>
+                </div>
+                <div data-kt-search-element="results" *ngIf="modalProperty.length > 0">
+                  <div class="mh-300px scroll-y me-n5 pe-5" *ngFor="let item of modalProperty"
+                    (click)="setSelectedProperty(item)">
+                    <div
+                      class="d-flex align-items-center p-3 rounded-3 border-hover border border-dashed border-gray-300 cursor-pointer mb-1"
+                      data-kt-search-element="customer">
+                      <div class="symbol symbol-35px symbol-circle me-5">
+                        <img [src]="baseUrl +  item.image" />
+                      </div>
+                      <div class="fw-semibold">
+                        <span class="fs-6 text-gray-800 me-2">{{ item.fulladdress
+                          }}</span>
+                        <span class="badge badge-light">{{ item.code }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div data-kt-search-element="empty" class="text-center" *ngIf="modalProperty.length == 0">
+                  <div class="fw-semibold py-0 mb-10">
+                    <div class="text-gray-600 fs-3 mb-2">No se han encontrado Inmuebles
+                    </div>
+                    <div class="text-gray-400 fs-6">Buscar Inmueble por nombre completo o
+                      correo...
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="fw-semibold">
+                <label class="fs-6">Crear nuevo Inmueble</label>
+              </div>
+              <a (click)="closeModal()" [routerLink]="['../../administracion-de-inmuebles', 'add']"
+                class="btn btn-primary btn-sm"> +
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

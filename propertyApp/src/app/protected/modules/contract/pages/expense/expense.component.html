@@ -1,0 +1,47 @@
+<div class="card card-flush">
+    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+        <div class="card-body pt-0">
+            <table class="table align-middle table-row-dashed fs-6 gy-5">
+                <thead>
+                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                        <th class="min-w-100px text-center "># Servicio</th>
+                        <th class="min-w-75px text-center ">Fecha</th>
+                        <th class="min-w-100px"> Descripción</th>
+                        <th class="min-w-75px text-end ">Cantidad</th>
+                        <th class="min-w-75px text-center ">Categoría</th>
+                        <th class="min-w-100px text-center ">Contrato</th>
+                        <th class="min-w-75px text-center ">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="fw-semibold text-gray-600">
+                    <tr *ngFor="let item of allExpense | slice:0:50">
+                        <td class="text-center">
+                            <span data-bs-toggle="modal" data-bs-target="#kt_modal_view_expense"
+                                class="text-gray-800 text-hover-primary fs-5 fw-bold"># {{ item.id }}</span>
+                        </td>
+                        <td class="text-center">{{ item.expensedate }}</td>
+                        <td class="pe-0">{{ item.description }}</td>
+                        <td class="text-end pe-0">{{ item.amount | currency }} {{ item.currency }}</td>
+                        <td class="text-center pe-0">
+                            <div class="badge badge-light-warning">
+                                {{ item.categoryname | lowercase }}</div>
+                        </td>
+                        <td class="text-center pe-0">
+                            <a [routerLink]="['../administracion-de-contratos', item.saleid]"
+                                class="text-gray-800 text-hover-primary fs-5"> # {{ item.saleid }}
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <div
+                                class="badge {{ item.status == 'inactivo' ? 'badge-light-danger' : 'badge-light-success' }}">
+                                {{
+                                item.status }}</div>
+                        </td>
+                    </tr>
+                    <tr *ngIf=" allExpense.length == 0">
+                        <td colspan="7" class="text-center">No hay datos</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>

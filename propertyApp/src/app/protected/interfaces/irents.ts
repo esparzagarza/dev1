@@ -1,0 +1,37 @@
+export interface IRents {
+  id: string;
+  accountid: string;
+  saleid: string;
+  balancedue: string;
+  amount: string;
+  currency: string;
+  parity: string;
+  method: string;
+  reference: string;
+  startdate: string;
+  enddate: string;
+  pyear: string;
+  pmonth: string;
+  status: string;
+  created_by?: string;
+  created_at?: string;
+  modified_by?: string;
+  modified_at?: string;
+  stype: string;
+  stotal: string;
+  scurrency: string;
+  sstartdate: string;
+  senddate: string;
+  eid: string;
+  eimage: string;
+  ename: string;
+  eemail: string;
+  ephone: string;
+  iid: string;
+  iimage: string;
+  icode: string;
+  ifulladdress: string;
+  iwatermeter: string;
+  ilightmeter: string;
+  iproperty: string;
+}

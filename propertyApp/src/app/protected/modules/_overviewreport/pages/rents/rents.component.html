@@ -1,0 +1,126 @@
+<div class="card card-flush">
+  <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+    <div class="card-title">
+      <div class="d-flex align-items-center position-relative my-1">
+        <span class="svg-icon svg-icon-1 position-absolute ms-4">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1"
+              transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+            <path
+              d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+              fill="currentColor" />
+          </svg>
+        </span>
+        <input type="text" class="form-control form-control-lg form-control-solid px-15"
+          placeholder="Contrato, Direccion, Nombre, Correo ó Telefono" (keyup.enter)="searchItem()" #txtSearchItem>
+      </div>
+    </div>
+    <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+      <div class="w-100 mw-150px">
+        <select class="form-select form-select-solid" data-control="select2" data-hide-search="true"
+          [ngModel]="selectedYear"
+          (ngModelChange)="getAllDataByFilters($event, selectedMonth, selectedMethod, selectedCurrency)">
+          <option value="">Año</option>
+          <option *ngFor="let item of modules.baseyears" value="{{ item }}">{{ item }}
+          </option>
+        </select>
+      </div>
+      <div class="w-100 mw-150px">
+        <select class="form-select form-select-solid" data-control="select2" data-hide-search="true"
+          [ngModel]="selectedMonth"
+          (ngModelChange)="getAllDataByFilters(selectedYear, $event, selectedMethod, selectedCurrency)">
+          <option value="">Mes</option>
+          <option *ngFor="let item of modules.basemonths" value="{{ item }}">{{ item | titlecase }}
+          </option>
+        </select>
+      </div>
+      <div class="w-100 mw-150px">
+        <select class="form-select form-select-solid" data-control="select2" data-hide-search="true"
+          [ngModel]="selectedMethod"
+          (ngModelChange)="getAllDataByFilters(selectedYear, selectedMonth, $event, selectedCurrency)">
+          <option value="">Método</option>
+          <option *ngFor="let item of modules.paymentmethods" value="{{ item }}">{{ item | titlecase
+            }}
+          </option>
+        </select>
+      </div>
+      <div class="w-100 mw-150px">
+        <select class="form-select form-select-solid" data-control="select2" data-hide-search="true"
+          [ngModel]="selectedCurrency"
+          (ngModelChange)="getAllDataByFilters(selectedYear, selectedMonth, selectedMethod, $event)">
+          <option value="">Moneda</option>
+          <option *ngFor="let item of allCurrency" value="{{ item.currency_code }}">{{
+            item.currency_code | uppercase }}
+          </option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-success" onclick="window.print();"> <i class="fa fa-print"></i></button>
+    </div>
+  </div>
+  <div class="card-body pt-0">
+    <table class="table align-middle table-row-dashed fs-6 gy-5 section-to-print">
+      <thead>
+        <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+          <th class="min-w-75px"># Contrato</th>
+          <th class="min-w-75px text-center">Inicio</th>
+          <th class="min-w-75px text-center">Termina</th>
+          <th class="min-w-50px text-center">Año</th>
+          <th class="min-w-50px text-center">Mes</th>
+          <th class="min-w-150px text-center">Fecha de Pago</th>
+          <th class="min-w-50px text-center">Metodo</th>
+          <th class="min-w-150px text-end">Contratado</th>
+          <th class="min-w-150px text-end">Pagado</th>
+          <th class="min-w-150px text-end">Saldo</th>
+        </tr>
+      </thead>
+      <tbody class="fw-semibold text-gray-600">
+        <ng-container *ngFor="let item of allViewFilteredPayment">
+          <tr>
+            <td rowspan="2">
+              <div class="d-flex align-items-center">
+                <a [routerLink]="['../administracion-de-inmuebles/', item.iid]" class="symbol symbol-100px">
+                  <img [src]="baseUrl + item.iimage">
+                </a>
+              </div>
+            </td>
+            <td class="text-start" [routerLink]="['../administracion-de-contratos/', item.saleid]">
+              <div class="ms-5">
+                <span class="text-gray-800 text-hover-primary fs-5 fw-bold">
+                  <strong># {{ item.saleid }}</strong>
+                </span>
+              </div>
+            </td>
+            <td class="text-start" colspan="3" [routerLink]="['../administracion-de-inmuebles/', item.iid]">
+              <div class="ms-5">
+                <span class="text-gray-800 text-hover-primary fs-5 fw-bold">
+                  <strong>{{ item.icode }}</strong>
+                </span>
+              </div>
+            </td>
+            <td class="text-start" colspan="4" [routerLink]="['../administracion-de-inmuebles/', item.iid]">
+              <div class="ms-5">
+                <span class="text-gray-800 text-hover-primary fs-5 fw-bold">
+                  <small>{{ item.ifulladdress }}</small>
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center">{{ item.sstartdate }}</td>
+            <td class="text-center">{{ item.senddate }}</td>
+            <td class="text-center">{{ item.pyear }}</td>
+            <td class="text-center">{{ item.pmonth | titlecase }}</td>
+            <td class="text-center">{{ item.created_at }}</td>
+            <td class="text-center">{{ item.method | titlecase }}</td>
+            <td class="text-end">{{ item.stotal | currency }} {{ item.scurrency }}</td>
+            <td class="text-end">{{ item.amount | currency }} {{ item.currency }}</td>
+            <td class="text-end">{{ item.balancedue | currency }} {{ item.currency }}</td>
+          </tr>
+        </ng-container>
+        <tr *ngIf="allViewFilteredPayment.length == 0">
+          <td colspan="9" class="text-center">No hay datos</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

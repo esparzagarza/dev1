@@ -1,0 +1,198 @@
+<div id="kt_app_content" class="app-content flex-column-fluid">
+    <div id="kt_app_content_container" class="app-container container-xxl d-flex flex-column flex-lg-row">
+        <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
+            <div class="card card-flush py-4">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h2>Imágen</h2>
+                    </div>
+                </div>
+                <div class="card-body text-center pt-0">
+                    <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3"
+                        data-kt-image-input="true"
+                        [ngStyle]="{ 'background-image': 'url(' + baseUrl + heroe.image + ')'}">
+                        <div class="image-input-wrapper w-150px h-150px"></div>
+                        <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                            data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                            <i class="bi bi-pencil-fill fs-7"></i>
+                            <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+                        </label>
+                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                            data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                            <i class="bi bi-x fs-2"></i>
+                        </span>
+                        <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                            data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                            <i class="bi bi-x fs-2"></i>
+                        </span>
+                    </div>
+                    <div class="text-muted fs-7">Solo se admiten archivos de imagen *.png, *.jpg y *.jpeg.</div>
+                </div>
+            </div>
+            <div class="card card-flush py-4">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h2>Status</h2>
+                    </div>
+                    <div class="card-toolbar">
+                        <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_product_status"></div>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <select class="form-select mb-2" data-control="select2" data-hide-search="true"
+                        data-placeholder="Select an option" [(ngModel)]="heroe.status"
+                        (ngModelChange)="patchItem('status')" [ngModelOptions]="{standalone: true}">
+                        <option *ngFor="let item of modules.basestatus" value="{{ item }}">{{ item | titlecase }}
+                        </option>
+                    </select>
+                    <div class="text-muted fs-7">Establece el estado del inquilino.</div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+            <form (ngSubmit)="saveItem()">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="kt_ecommerce_add_product_general" role="tab-panel">
+                        <div class="d-flex flex-column gap-7 gap-lg-10">
+                            <div class="card card-flush py-4">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h2>General</h2>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-0">
+                                    <div class="mb-10 fv-row">
+                                        <label class="required form-label" for="code">Nombre Completo</label>
+                                        <input type="text" id="code" [(ngModel)]="heroe.name" name="code"
+                                            class="form-control mb-2" placeholder="Nombre del inquilino" required />
+                                        <div class="text-muted fs-7">Se requiere un nombre completo para el inquilino y
+                                            se
+                                            recomienda que sea único.
+                                        </div>
+                                    </div>
+                                    <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                                        <div class="col">
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class="form-label">Genero</label>
+                                                <select class="form-select mb-2" data-control="select2"
+                                                    data-hide-search="true" data-placeholder="Select an option"
+                                                    [(ngModel)]="heroe.gender" [ngModelOptions]="{standalone: true}">
+                                                    <option value=""></option>
+                                                    <option value="M">Masculilno</option>
+                                                    <option value="F">Femenino</option>
+                                                </select>
+                                                <div class="text-muted fs-7">Establezca el genero.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class="form-label">Nacionalidad</label>
+                                                <input type="text" class="form-control mb-2" id="nationality"
+                                                    [(ngModel)]="heroe.nationality" name="nationality" />
+                                                <div class="text-muted fs-7">Establezca la Nacionalidad.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                                        <div class="col">
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class="form-label">Correo</label>
+                                                <input type="email" class="form-control mb-2" id="email"
+                                                    [(ngModel)]="heroe.email" name="email" />
+                                                <div class="text-muted fs-7">Establezca el correco eléctronico.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class="form-label">Telefono</label>
+                                                <input type="phone" class="form-control mb-2" id="phone"
+                                                    [(ngModel)]="heroe.phone" name="phone" />
+                                                <div class="text-muted fs-7">Establezca el telefono de contacto.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card card-flush py-4">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h2>Detalles</h2>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-0">
+                                    <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                                        <div class="col">
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class="form-label">Tipo de Documento</label>
+                                                <input type="text" class="form-control mb-2" id="doctype"
+                                                    [(ngModel)]="heroe.doctype" name="doctype" />
+                                                <div class="text-muted fs-7">Establezca el tipo de documento ej: INE,
+                                                    Pasaporte, etc.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class="form-label">Número del documento</label>
+                                                <input type="text" class="form-control mb-2" id="docnumber"
+                                                    [(ngModel)]="heroe.docnumber" name="docnumber" />
+                                                <div class="text-muted fs-7">Establezca el número del documento.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                                        <div class="col">
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class="form-label">Fecha de Nacimiento</label>
+                                                <input type="date" class="form-control mb-2" id="dob"
+                                                    [(ngModel)]="heroe.dob" name="dob" />
+                                                <div class="text-muted fs-7">Establezca la fecha de nacimiento.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class="form-label">RFC</label>
+                                                <input type="text" class="form-control mb-2" id="dni"
+                                                    [(ngModel)]="heroe.dni" name="dni" />
+                                                <div class="text-muted fs-7">Establezca el RFC.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                                        <div class="col">
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class="form-label">Razón Social</label>
+                                                <input type="text" class="form-control mb-2" id="fiscalname"
+                                                    [(ngModel)]="heroe.fiscalname" name="fiscalname" />
+                                                <div class="text-muted fs-7">Establezca la razón social.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <label class="form-label">Dirección Fiscal</label>
+                                                <input type="text" class="form-control mb-2" id="fulladdress"
+                                                    [(ngModel)]="heroe.fulladdress" name="fulladdress" />
+                                                <div class="text-muted fs-7">Establezca la dirección Fiscal.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <a [routerLink]="[heroe.id ? '../../' : '../']" id="kt_ecommerce_add_product_cancel"
+                        class="btn btn-light me-5">Cancel</a>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="indicator-label">{{ heroe.id ? 'Actualizar' : 'Crear' }}</span>
+                        <span class="indicator-progress">Un momento porfavor...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

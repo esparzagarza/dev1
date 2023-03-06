@@ -1,0 +1,42 @@
+<div class="card pt-4 mb-6 mb-xl-9">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <h2>Perfil</h2>
+        </div>
+    </div>
+    <div class="card-body pt-0 pb-5">
+        <form autocomplete="off" [formGroup]="letsdoitForm" (ngSubmit)="saveItem()">
+            <div class="fv-row mb-7">
+                <label class="fs-6 fw-semibold form-label mb-2 required">
+                    <span>Nombre del Propietario</span>
+                </label>
+                <input class="form-control form-control-lg form-control-solid" [(ngModel)]="heroe.name" type="text"
+                    placeholder="" formControlName="name" autocomplete="off">
+                <div class="text-muted fs-7">Establezca el nombre del Propietario.</div>
+            </div>
+            <div class="fv-row mb-7">
+                <label class="fs-6 fw-semibold form-label mb-2">
+                    <span>Nombre de la Aplicación</span>
+                </label>
+                <input class="form-control form-control-lg" [(ngModel)]="heroe.appname" type="text" placeholder=""
+                    formControlName="appname" autocomplete="off">
+                <div class="text-muted fs-7">Establezca el nombre de la Aplicación.</div>
+            </div>
+            <div class="fv-row mb-7">
+                <label class="form-label" for="description">Descripción</label>
+                <textarea rows="4" class="form-control mb-2" [(ngModel)]="heroe.description" type="text" placeholder=""
+                    formControlName="description" autocomplete="off"></textarea>
+                <div class="text-muted fs-7">Establezca una descripción para la cuenta. </div>
+            </div>
+            <div class='separator separator-dashed my-5'></div>
+            <div class="text-center pt-15">
+                <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit"
+                    [disabled]="letsdoitForm.invalid">
+                    <span class="indicator-label">Enviar</span>
+                    <span class="indicator-progress">Un momento porfavor...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

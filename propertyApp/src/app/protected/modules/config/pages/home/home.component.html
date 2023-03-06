@@ -1,0 +1,168 @@
+<div id="kt_app_toolbar" class="app-toolbar py-4 py-lg-8" data-kt-sticky="true" data-kt-sticky-name="app-toolbar-sticky"
+  data-kt-sticky-offset="{default: 'false', lg: '300px'}">
+  <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack flex-wrap">
+    <div class="page-title py-2 py-sm-0 d-flex flex-column justify-content-center me-3 section-to-print">
+      <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+        Ajustes de Sistema
+        <span class="page-desc text-muted fs-7 fw-semibold pt-2">Establezca los parametros para utilizar su
+          Sistema</span>
+      </h1>
+    </div>
+    <div class="d-flex align-items-center gap-2 gap-lg-3">
+      <button [routerLink]="['../administracion-de-contratos', 'add']" type="button"
+        class="btn btn-flex btn-sm h-40px fw-bold btn-success">
+        <span class="svg-icon svg-icon-2">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)"
+              fill="currentColor" />
+            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
+          </svg>
+        </span>
+        Iniciar Contrato
+      </button>
+    </div>
+  </div>
+</div>
+<div id="kt_app_content" class="app-content flex-column-fluid">
+  <div id="kt_app_content_container" class="app-container container-xxl">
+    <div class="d-flex flex-column flex-lg-row">
+      <div class="flex-column flex-lg-row-auto w-lg-250px w-xl-350px mb-10">
+        <div class="card card-flush py-4">
+          <div class="card-body text-center pt-0">
+            <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3"
+              data-kt-image-input="true" [ngStyle]="{ 'background-image': 'url(' + baseUrl + heroe.image + ')'}">
+              <div class="image-input-wrapper w-150px h-150px"></div>
+              <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                <i class="bi bi-pencil-fill fs-7"></i>
+                <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+              </label>
+              <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                <i class="bi bi-x fs-2"></i>
+              </span>
+              <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                <i class="bi bi-x fs-2"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-5 mb-xl-8">
+          <div class="card-body">
+            <div class="d-flex flex-center flex-column py-5">
+              <div class="fs-3 text-gray-800 text-hover-primary fw-bold mb-3">{{ heroe.name }}</div>
+              <div class="mb-9">
+                <div class="badge badge-lg badge-light-primary d-inline">{{ heroe.type | titlecase }}
+                </div>
+              </div>
+            </div>
+            <div class="d-flex flex-stack fs-4 py-3">
+              <div class="fw-bold">Details</div>
+              <div class="badge {{ heroe.status == 'inactiva' ? 'badge-light-danger' : 'badge-light-success' }}">
+                {{ heroe.status }}</div>
+            </div>
+            <div class="separator separator-dashed my-3"></div>
+            <div class="pb-5 fs-6">
+              <div class="fw-bold mt-5">Correo principal</div>
+              <div class="text-gray-600 text-hover-primary">{{ heroe.email }}</div>
+              <div class="fw-bold mt-5">Nombre de la Aplicación</div>
+              <div class="text-gray-600">{{ heroe.appname }}</div>
+              <div class="fw-bold mt-5">Slug</div>
+              <div class="text-gray-600">{{ heroe.slug }}</div>
+              <div class="fw-bold mt-5">Descripción</div>
+              <div class="text-gray-600">{{ heroe.description }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="card card-flush py-4">
+          <div class="card-header">
+            <div class="card-title">
+              <h2>Tipo</h2>
+            </div>
+            <div class="card-toolbar">
+              <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_product_status">
+              </div>
+            </div>
+          </div>
+          <div class="card-body pt-0">
+            <select class="form-select mb-2" data-control="select2" data-hide-search="true"
+              data-placeholder="Select an option" [(ngModel)]="heroe.type" (ngModelChange)="patchItem('type')"
+              [ngModelOptions]="{standalone: true}">
+              <option *ngFor="let item of modules.basetypes" value="{{ item }}">{{ item | titlecase }}
+              </option>
+            </select>
+            <div class="text-muted fs-7">Establece el tipo de cuenta.</div>
+          </div>
+        </div>
+        <div class="card card-flush py-4">
+          <div class="card-header">
+            <div class="card-title">
+              <h2>Status</h2>
+            </div>
+            <div class="card-toolbar">
+              <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_product_status">
+              </div>
+            </div>
+          </div>
+          <div class="card-body pt-0">
+            <select class="form-select mb-2" data-control="select2" data-hide-search="true"
+              data-placeholder="Select an option" [(ngModel)]="heroe.status" (ngModelChange)="patchItem('status')"
+              [ngModelOptions]="{standalone: true}">
+              <option *ngFor="let item of modules.basestatus" value="{{ item }}">{{ item | titlecase }}
+              </option>
+            </select>
+            <div class="text-muted fs-7">Establece el status de la cuenta.</div>
+          </div>
+        </div>
+      </div>
+      <div class="flex-lg-row-fluid ms-lg-15">
+        <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8">
+          <li class="nav-item">
+            <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#kt_account_tab">Cuenta</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
+              href="#kt_category_tab">Categorías</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
+              href="#kt_tax_tab">Impuestos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
+              href="#kt_currency_tab">Monedas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
+              href="#kt_property_tab">Propiedades</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
+              href="#kt_system_tab">Sistema</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane show active" id="kt_account_tab" role="tabpanel">
+            <app-account></app-account>
+          </div>
+          <div class="tab-pane" id="kt_category_tab" role="tabpanel">
+            <app-category></app-category>
+          </div>
+          <div class="tab-pane" id="kt_tax_tab" role="tabpanel">
+            <app-tax></app-tax>
+          </div>
+          <div class="tab-pane" id="kt_currency_tab" role="tabpanel">
+            <app-currency></app-currency>
+          </div>
+          <div class="tab-pane" id="kt_property_tab" role="tabpanel">
+            <app-property></app-property>
+          </div>
+          <div class="tab-pane" id="kt_system_tab" role="tabpanel">
+            <app-system></app-system>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

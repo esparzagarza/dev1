@@ -1,0 +1,116 @@
+<div id="kt_app_content" class="app-content flex-column-fluid">
+  <div id="kt_app_content_container" class="app-container container-xxl">
+    <form (ngSubmit)="saveItem()">
+      <div class="d-flex flex-column flex-lg-row">
+        <div class="flex-lg-row-fluid me-lg-15 order-2 order-lg-1 mb-10 mb-lg-0">
+          <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+            <div class="d-flex flex-column gap-7 gap-lg-10">
+              <div class="card card-flush py-4">
+                <div class="card-header">
+                  <div class="card-title">
+                    <h2>General</h2>
+                  </div>
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row row-cols-1 row-cols-sm-3 rol-cols-md-1 row-cols-lg-3">
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Asignar día de Pago</label>
+                        <input type="number" step="1" min="1" max="31" class="form-control mb-2" id="day"
+                          [(ngModel)]="heroe.day" name="day" />
+                        <div class="text-muted fs-7">Establezca el día de Pago, desde 1 hasta
+                          31.
+                        </div>
+                        <br />
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Días de Tolerancia</label>
+                        <input type="number" step="1" min="1" max="31" class="form-control mb-2" id="daysoftolerance"
+                          [(ngModel)]="heroe.daysoftolerance" name="daysoftolerance" />
+                        <div class="text-muted fs-7">Establezca los dias de tolerancia para
+                          recalcular el interes moratorio</div>
+                        <br />
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Tipo de Contrato</label>
+                        <select class="form-select mb-2" data-control="select2" data-hide-search="true"
+                          data-placeholder="Select an option" [(ngModel)]="heroe.type"
+                          [ngModelOptions]="{standalone: true}">
+                          <option *ngFor="let item of modules.saletypes" value="{{ item }}">{{
+                            item | titlecase }}</option>
+                        </select>
+                        <div class="text-muted fs-7">Establezca el tipo de contrato.
+                        </div>
+                        <br />
+                      </div>
+                    </div>
+                  </div>
+                  <div class='separator separator-dashed my-5'></div>
+                  <div class="mb-10 fv-row">
+                    <label class="form-label" for="comments">Claúsulas especiales</label>
+                    <textarea rows="4" id="comments" [(ngModel)]="heroe.comments" name="comments"
+                      class="form-control mb-2" placeholder="Dirección completa para el Inmueble"></textarea>
+                    <div class="text-muted fs-7">Enliste las claúsulas especiales, opcional.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex-column flex-lg-row-auto w-100 w-lg-250px w-xl-300px mb-10 order-1 order-lg-2">
+          <div class="card card-flush py-4">
+            <div class="card-header">
+              <div class="card-title">
+                <h2>Status</h2>
+              </div>
+              <div class="card-toolbar">
+                <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_product_status"></div>
+              </div>
+            </div>
+            <div class="card-body pt-0">
+              <select class="form-select mb-2" data-control="select2" data-hide-search="true"
+                data-placeholder="Select an option" [(ngModel)]="heroe.status" (ngModelChange)="patchItem('status')"
+                [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let item of modules.salestatus" value="{{ item }}">{{ item |
+                  titlecase }}</option>
+              </select>
+              <div class="text-muted fs-7">Establece el estado del Inmueble.</div>
+            </div>
+          </div>
+          <div class="card card-flush pt-3 mb-0" data-kt-sticky="true" data-kt-sticky-name="subscription-summary"
+            data-kt-sticky-offset="{default: false, lg: '200px'}" data-kt-sticky-width="{lg: '250px', xl: '300px'}"
+            data-kt-sticky-left="auto" data-kt-sticky-top="150px" data-kt-sticky-animation="false"
+            data-kt-sticky-zindex="95">
+            <div class="card-header">
+              <div class="card-title">
+                <h2>Total</h2>
+              </div>
+            </div>
+            <div class="card-body pt-0 fs-6">
+              <div class="mb-7 text-center">
+                <h3 class="mb-3">
+                  {{ heroe.total | currency }}
+                </h3>
+                <span class="fw-semibold text-gray-600 text-hover-primary">{{ heroe.currency }}</span>
+              </div>
+            </div>
+            <div class="card-footer pt-0">
+              <div class="d-flex justify-content-end">
+                <a [routerLink]="['app/administracion-de-contratos']" class="btn btn-light me-5">Cancel</a>
+                <button type="submit" class="btn btn-primary">
+                  <span class="indicator-label">Actualizar</span>
+                  <span class="indicator-progress">Un momento porfavor...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

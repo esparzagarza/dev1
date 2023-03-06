@@ -1,0 +1,98 @@
+<div class="card pt-4 mb-6 mb-xl-9">
+    <div class="card-body pt-0 pb-5">
+        <form class="form" autocomplete="off" [formGroup]="letsdoitForm" (ngSubmit)="saveItem()">
+            <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                <div class="col">
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold form-label mb-2 required">
+                            <span>Moneda</span>
+                        </label>
+                        <select class="form-select mb-2" [(ngModel)]="heroe.currencyid" formControlName="currencyid">
+                            <option *ngFor="let item of allCurrency" value="{{ item.id }}">{{ item.currency_code }}
+                            </option>
+                        </select>
+                        <div class="text-muted fs-7">Seleccione la Moneda.</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold form-label mb-2 required">
+                            <span>Moneda</span>
+                        </label>
+                        <select class="form-select mb-2" [(ngModel)]="heroe.taxid" formControlName="taxid">
+                            <option *ngFor="let item of allTax" value="{{ item.id }}">{{ item.name }}
+                            </option>
+                        </select>
+                        <div class="text-muted fs-7">Seleccione el Impuesto.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class='separator separator-dashed my-5'></div>
+
+            <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                <div class="col">
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold form-label mb-2 required">
+                            <span>Nombre del Remitente</span>
+                        </label>
+                        <input class="form-control form-control-lg" type="text" placeholder=""
+                            [(ngModel)]="heroe.smtpfromname" formControlName="smtpfromname" autocomplete="off">
+                        <div class="text-muted fs-7">Establece el nombre.</div>
+                    </div>
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold form-label mb-2 required">
+                            <span>Correo del Remitente</span>
+                        </label>
+                        <input class="form-control form-control-lg form-control-solid" type="email" placeholder=""
+                            [(ngModel)]="heroe.smtpfromemail" formControlName="smtpfromemail" autocomplete="off">
+                        <div class="text-muted fs-7">Establece el correo.</div>
+                    </div>
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold form-label mb-2">
+                            <span>Contraseña del Remitente</span>
+                        </label>
+                        <input class="form-control form-control-lg form-control-solid" type="password"
+                            placeholder="******" formControlName="smtpfrompassword" autocomplete="off"
+                            id="smtpfrompassword">
+                        <div class="text-muted fs-7">Establece la contraseña.</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold form-label mb-2 required">
+                            <span>Nombre del Destinatario</span>
+                        </label>
+                        <input class="form-control form-control-lg" type="text" placeholder=""
+                            [(ngModel)]="heroe.smtptoname" formControlName="smtptoname" autocomplete="off">
+                        <div class="text-muted fs-7">Establece el nombre.</div>
+                    </div>
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold form-label mb-2 required">
+                            <span>Correo del Destinatario</span>
+                        </label>
+                        <input class="form-control form-control-lg form-control-solid" type="email" placeholder=""
+                            [(ngModel)]="heroe.smtptoemail" formControlName="smtptoemail" autocomplete="off">
+                        <div class="text-muted fs-7">Establece el correo.</div>
+                    </div>
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold form-label mb-2 required">
+                            <span>Mensaje default</span>
+                        </label>
+                        <textarea rows="4" class="form-control mb-2" placeholder="" [(ngModel)]="heroe.smtptomensaje"
+                            formControlName="smtptomensaje" autocomplete="off"></textarea>
+                        <div class="text-muted fs-7">Establezca el mennsaje. </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center pt-15">
+                <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit"
+                    [disabled]="letsdoitForm.invalid">
+                    <span class="indicator-label">Enviar</span>
+                    <span class="indicator-progress">Un momento porfavor...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

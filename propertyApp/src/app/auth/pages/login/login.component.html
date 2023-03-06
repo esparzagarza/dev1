@@ -1,0 +1,23 @@
+<form class="form w-100" novalidate="novalidate" autocomplete="off" [formGroup]="authForm" (ngSubmit)="letsdoit()">
+  <div class="text-center mb-11">
+    <h1 class="text-dark fw-bolder mb-3">Iniciar Sesión</h1>
+  </div>
+  <div class="separator separator-content my-14">
+    <span class="w-125px text-gray-500 fw-semibold fs-7">Bienvenido</span>
+  </div>
+  <div class="fv-row mb-8">
+    <input type="text" class="form-control bg-transparent" type="email" formControlName="email"
+      placeholder="Ingrese su email" autocomplete="off" />
+  </div>
+  <div class="fv-row mb-3">
+    <input type="password" class="form-control bg-transparent" formControlName="password"
+      placeholder="Ingrese su contraseña" autocomplete="off" />
+  </div>
+  <div class="d-grid mb-10">
+    <button type="submit" [disabled]="authForm.invalid" id="kt_sign_in_submit" class="btn btn-primary">
+      <span class="indicator-label">Ingresar</span>
+      <span class="indicator-progress">Un momento porfavoe...
+        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+    </button>
+  </div>
+</form>
