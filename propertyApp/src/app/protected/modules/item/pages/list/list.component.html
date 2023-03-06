@@ -1,0 +1,137 @@
+<div id="kt_app_content" class="app-content flex-column-fluid">
+  <div id="kt_app_content_container" class="app-container container-xxl">
+    <div class="card card-flush">
+      <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+        <div class="card-title">
+          <div class="d-flex align-items-center position-relative my-1">
+            <span class="svg-icon svg-icon-1 position-absolute ms-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1"
+                  transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                <path
+                  d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+                  fill="currentColor" />
+              </svg>
+            </span>
+            <input type="text" class="form-control form-control-lg form-control-solid px-15"
+              placeholder="Codigo, Nombre, Medidor o Fecha" (keyup.enter)="searchItem()" #txtSearchItem>
+          </div>
+        </div>
+        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+          <div class="w-100 mw-150px">
+            <select class="form-select form-select-solid" data-control="select2" data-hide-search="true"
+              data-placeholder="Status" [ngModel]="selectedProperty"
+              (ngModelChange)="getAllDataByFilters($event, selectedType, selectedStatus)">
+              <option value="">Propiedad</option>
+              <option *ngFor="let item of allProperty" value="{{ item.name }}">{{ item.name }}
+              </option>
+            </select>
+          </div>
+          <div class="w-100 mw-150px">
+            <select class="form-select form-select-solid" data-control="select2" data-hide-search="true"
+              data-placeholder="Status" [ngModel]="selectedType"
+              (ngModelChange)="getAllDataByFilters(selectedProperty, $event, selectedStatus)">
+              <option value="">Tipo</option>
+              <option *ngFor="let item of modules.propertytypes" value="{{ item }}">{{ item | titlecase }}
+              </option>
+            </select>
+          </div>
+          <div class="w-100 mw-150px">
+            <select class="form-select form-select-solid" data-control="select2" data-hide-search="true"
+              data-placeholder="Status" [ngModel]="selectedStatus"
+              (ngModelChange)="getAllDataByFilters(selectedProperty, selectedType, $event)">
+              <option value="">Status</option>
+              <option *ngFor="let item of modules.propertystatus" value="{{ item }}">{{ item | titlecase }}
+              </option>
+            </select>
+          </div>
+          <button [routerLink]="['add']" type="button" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#kt_modal_add_user">
+            <span class="svg-icon svg-icon-2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
+                  transform="rotate(-90 11.364 20.364)" fill="currentColor" />
+                <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
+              </svg>
+            </span>
+          </button>
+          <button type="button" class="btn btn-success" onclick="window.print();"> <i class="fa fa-print"></i></button>
+        </div>
+      </div>
+      <div class="card-body pt-0">
+        <table class="table align-middle table-row-dashed fs-6 gy-5 section-to-print">
+          <thead>
+            <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+              <th class="min-w-75px">Inmueble</th>
+              <th class="min-w-100px text-center">Propiedad</th>
+              <th class="min-w-100px text-center"># Agua</th>
+              <th class="min-w-100px text-center"># Luz</th>
+              <th class="min-w-100px text-right">Precio</th>
+              <th class="min-w-100px text-center">Status</th>
+              <th class="min-w-100px text-center">Creación</th>
+              <th class="min-w-70px text-center">Acción</th>
+            </tr>
+          </thead>
+          <tbody class="fw-semibold text-gray-600">
+            <ng-container *ngFor="let item of allViewFilteredItem | slice:0:50">
+              <tr style="cursor: pointer;">
+                <td rowspan="2">
+                  <div class="d-flex align-items-center">
+                    <a [routerLink]="['../administracion-de-inmuebles/', item.id]" class="symbol symbol-100px">
+                      <img [src]="baseUrl + item.image">
+                    </a>
+                  </div>
+                </td>
+                <td class="text-center" [routerLink]="['../administracion-de-inmuebles/', item.id]">
+                  <div class="ms-5">
+                    <span class="text-gray-800 text-hover-primary fs-5 fw-bold">
+                      <strong>{{ item.type | titlecase }}</strong>
+                    </span>
+                  </div>
+                </td>
+                <td class="text-start" colspan="2" [routerLink]="['../administracion-de-inmuebles/', item.id]">
+                  <div class="ms-5">
+                    <span class="text-gray-800 text-hover-primary fs-5 fw-bold">
+                      <strong>{{ item.code }}</strong>
+                    </span>
+                  </div>
+                </td>
+                <td class="text-start" colspan="4" [routerLink]="['../administracion-de-inmuebles/', item.id]">
+                  <div class="ms-3">
+                    <span class="text-gray-800 text-hover-primary fs-5 fw-bold">
+                      <small>{{ item.fulladdress }}</small>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="pe-0 text-center">{{ item.property }}</td>
+                <td class="pe-0 text-center">{{ item.watermeter }}</td>
+                <td class="pe-0 text-center">{{ item.lightmeter }}</td>
+                <td class="pe-0 text-right">{{ item.price | currency }}</td>
+                <td class="pe-0 text-center" data-order="item.status">
+                  <div class="badge {{ item.status == 'inactiva' ? 'badge-light-danger' : 'badge-light-success' }}"> {{
+                    item.status }}</div>
+                </td>
+                <td class="pe-0 text-center">{{ item.created_at }}</td>
+                <td class="text-end text-center">
+                  <a [routerLink]="[item.id, 'edit']" class="symbol symbol-20px">
+                    <img src="assets/media/icons/edit-button.svg" />
+                  </a>
+                </td>
+              </tr>
+            </ng-container>
+            <tr *ngIf=" allViewFilteredItem.length == 0">
+              <td colspan="7" class="text-center">No hay datos</td>
+              <td class="text-end text-center">
+                <a [routerLink]="['add']" class="symbol symbol-20px">
+                  <img src="assets/media/icons/edit-button.svg" />
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

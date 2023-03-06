@@ -1,0 +1,37 @@
+<div class="card card-flush">
+  <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+    <div class="card-body pt-0">
+      <table class="table align-middle table-row-dashed fs-6 gy-5">
+        <thead>
+          <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+            <th class="min-w-100px text-center"># Recibo</th>
+            <th class="min-w-100px text-center">Año</th>
+            <th class="min-w-100px text-center">Mes</th>
+            <th class="min-w-100px text-center">Monto</th>
+            <th class="min-w-100px text-center">Moneda</th>
+            <th class="min-w-50px text-center">Status</th>
+            <th class="min-w-150px text-center">Creado</th>
+          </tr>
+        </thead>
+        <tbody class="fw-semibold text-gray-600">
+          <tr *ngFor="let item of allRent | slice:0:50">
+            <td class="text-center">
+              <span class="text-gray-800 text-hover-primary fs-5 fw-bold"># {{ item.id }}</span>
+            </td>
+            <td class="text-center">{{ item.pyear }} </td>
+            <td class="text-center">{{ item.pmonth | titlecase }} </td>
+            <td class="text-center">{{ item.amount | currency }}</td>
+            <td class="text-center">{{ item.currency }}</td>
+            <td class="text-end">
+              <div class="badge {{ item.status == 'inactivo' ? 'badge-light-danger' : 'badge-light-success' }}"> {{
+                item.status }}</div>
+            </td>
+            <td class="text-center">{{ item.created_at }}</td>
+          </tr>
+          <tr *ngIf=" allRent.length == 0">
+            <td colspan="6" class="text-center">No hay datos</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

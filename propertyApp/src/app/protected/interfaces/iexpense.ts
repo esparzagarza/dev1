@@ -1,0 +1,32 @@
+export interface IExpense {
+  id: string;
+  accountid: string;
+  saleid: string;
+  categoryname: string;
+  currency: string;
+  description: string;
+  amount: string;
+  expensedate: string;
+  status: string;
+  created_by?: string;
+  created_at?: string;
+  modified_by?: string;
+  modified_at?: string;
+  stype: string;
+  stotal: string;
+  scurrency: string;
+  sstartdate: string;
+  senddate: string;
+  eid: string;
+  eimage: string;
+  ename: string;
+  eemail: string;
+  ephone: string;
+  iid: string;
+  iimage: string;
+  icode: string;
+  ifulladdress: string;
+  iwatermeter: string;
+  ilightmeter: string;
+  iproperty: string;
+}

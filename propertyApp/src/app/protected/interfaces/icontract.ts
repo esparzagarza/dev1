@@ -1,0 +1,37 @@
+export interface IContract {
+  id: string;
+  accountid: string;
+  enteid: string;
+  itemid: string;
+  currency: string;
+  parity: number;
+  taxname: string;
+  taxamount: number;
+  subtotal: number;
+  total: number;
+  paid: number;
+  day: string;
+  interestrate: number;
+  daysoftolerance: number;
+  guaranteedeposit: number;
+  type: string;
+  startdate: string;
+  enddate: string;
+  duration: string;
+  comments: string;
+  status: string;
+  created_by?: string;
+  created_at?: string;
+  modified_by?: string;
+  modified_at?: string;
+  eimage: string;
+  ename: string;
+  eemail: string;
+  ephone: string;
+  iimage: string;
+  icode: string;
+  ifulladdress: string;
+  iwatermeter: string;
+  ilightmeter: string;
+  iproperty: string;
+}

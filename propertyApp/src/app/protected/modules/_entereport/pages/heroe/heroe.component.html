@@ -1,0 +1,157 @@
+<div id="kt_app_content" class="app-content flex-column-fluid">
+  <div id="kt_app_content_container" class="app-container container-xxl">
+    <div class="card mb-6 mb-xl-9">
+      <div class="card-body pt-9 pb-0">
+        <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
+          <div data-bs-toggle="modal" data-bs-target="#kt_modal_search_ente" (click)="resetAllEnte()"
+            class="d-flex flex-center flex-shrink-0 bg-light rounded w-100px h-100px w-lg-150px h-lg-150px me-7 mb-4">
+            <img class="mw-50px mw-lg-150px" [src]="baseUrl + selectedEnte.image" />
+          </div>
+          <div class="flex-grow-1">
+            <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+              <div class="d-flex flex-column">
+                <div class="d-flex align-items-center mb-1">
+                  <span class="text-gray-800 text-hover-primary fs-2 fw-bold me-3">
+                    {{ selectedEnte.name }}
+                  </span>
+                </div>
+                <span class="badge badge-light-success me-auto">{{ selectedEnte.email }}</span>
+              </div>
+            </div>
+            <div class="d-flex flex-wrap justify-content-start">
+              <div class="d-flex flex-wrap">
+                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                  <div class="d-flex align-items-center">
+                    <div class="fs-4 fw-bold">{{ summary.payments }}</div>
+                  </div>
+                  <div class="fw-semibold fs-6 text-gray-400">Pagos</div>
+                </div>
+                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                  <div class="d-flex align-items-center">
+                    <div class="fs-4 fw-bold">{{ summary.sales }}</div>
+                  </div>
+                  <div class="fw-semibold fs-6 text-gray-400">Contratos</div>
+                </div>
+                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                  <div class="d-flex align-items-center">
+                    <div class="fs-4 fw-bold">{{ summary.expenses }}</div>
+                  </div>
+                  <div class="fw-semibold fs-6 text-gray-400">Servicios</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="separator"></div>
+        <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+          <li class="nav-item">
+            <a class="nav-link text-active-primary py-5 me-6 active" data-bs-toggle="tab"
+              href="#kt_report_view_rents">Rentas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-active-primary py-5 me-6" data-kt-countup-tabs="true" data-bs-toggle="tab"
+              href="#kt_report_view_contracts">Contratos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-active-primary py-5 me-6" data-kt-countup-tabs="true" data-bs-toggle="tab"
+              href="#kt_report_view_payments">Pagos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-active-primary py-5 me-6" data-kt-countup-tabs="true" data-bs-toggle="tab"
+              href="#kt_report_view_expenses">Servicios</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="tab-content">
+      <div class="tab-pane show active" id="kt_report_view_rents" role="tabpanel">
+        <app-rents [ente]="selectedEnte"></app-rents>
+      </div>
+      <div class="tab-pane show" id="kt_report_view_contracts" role="tabpanel">
+        <app-contracts [ente]="selectedEnte"></app-contracts>
+      </div>
+      <div class="tab-pane show" id="kt_report_view_payments" role="tabpanel">
+        <app-payments [ente]="selectedEnte"></app-payments>
+      </div>
+      <div class="tab-pane show" id="kt_report_view_expenses" role="tabpanel">
+        <app-expenses [ente]="selectedEnte"></app-expenses>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="kt_modal_search_ente" tabindex="-2" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered mw-650px">
+    <div class="modal-content">
+      <div class="modal-header pb-0 border-0 justify-content-end">
+        <button #closeModalEnte class="close btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+          <span class="svg-icon svg-icon-1">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                fill="currentColor" />
+              <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                fill="currentColor" />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div class="modal-body scroll-y mx-5 mx-xl-18 pt-0 pb-15">
+        <div class="text-center mb-13">
+          <h1 class="mb-3">Buscar Inquilino</h1>
+          <div class="text-muted fw-semibold fs-5">Seleccione el Inquilino a mostrar, o
+            <span (click)="unSetSelectedEnte()" class="link-primary fw-bold" style="cursor: pointer;">
+              Limpiar</span>.
+          </div>
+        </div>
+        <div class="text-center mb-12">
+          <h1 class="fw-bold mb-3"></h1>
+          <div class="text-gray-400 fw-semibold fs-5"></div>
+        </div>
+        <div data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter"
+          data-kt-search-layout="inline">
+          <input type="text" class="form-control form-control-lg form-control-solid px-15"
+            placeholder="Nombre, Correo o Telefono..." (keyup.enter)="searchEnte()" #txtSearchEnte>
+          <span class="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-5"
+            data-kt-search-element="spinner">
+            <span class="spinner-border h-15px w-15px align-middle text-gray-400"></span>
+          </span>
+          <div class="py-5">
+            <div data-kt-search-element="suggestions" *ngIf="modalEnte.length == 0">
+              <div class="text-center px-4 pt-10">
+                <img src="assets/media/illustrations/sketchy-1/4.png" alt="" class="mw-100 mh-200px" />
+              </div>
+            </div>
+            <div class="mh-450px scroll-y me-n7 pe-7">
+              <div data-kt-search-element="results" *ngIf="modalEnte.length > 0">
+                <div class="mh-300px scroll-y me-n5 pe-5" *ngFor="let item of modalEnte"
+                  (click)="setSelectedEnte(item)">
+                  <div
+                    class="d-flex align-items-center p-3 rounded-3 border-hover border border-dashed border-gray-300 cursor-pointer mb-1"
+                    data-kt-search-element="customer">
+                    <div class="symbol symbol-35px symbol-circle me-5">
+                      <img [src]="baseUrl +  item.image" />
+                    </div>
+                    <div class="fw-semibold">
+                      <span class="fs-6 text-gray-800 me-2">{{ item.name
+                        }}</span>
+                      <span class="badge badge-light">{{ item.email }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div data-kt-search-element="empty" class="text-center" *ngIf="modalEnte.length == 0">
+              <div class="fw-semibold py-0 mb-10">
+                <div class="text-gray-600 fs-3 mb-2">No se han encontrado Inquilinos
+                </div>
+                <div class="text-gray-400 fs-6">Nombre, Correo ó Telefono...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

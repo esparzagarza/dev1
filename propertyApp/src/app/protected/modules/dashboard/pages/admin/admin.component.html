@@ -1,0 +1,758 @@
+<div id="kt_app_content" class="app-content flex-column-fluid">
+
+  <div class="app-container container-xxl" *ngIf="user.role != 'recepcion'">
+    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+      <div class="col-xxl-6">
+        <div class="card card-flush h-xl-100">
+          <div class="card-body py-9">
+            <div class="row gx-9 h-100">
+              <div class="col-sm-6 mb-10 mb-sm-0">
+                <div
+                  class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-200px h-100"
+                  [ngStyle]="{ 'background-image': 'url(' + baseUrl + firstPayment.iimage + ')'}"></div>
+              </div>
+              <div class="col-sm-6">
+                <div class="d-flex flex-column h-100">
+                  <div class="mb-7">
+                    <div class="mb-6">
+                      <span class="text-gray-400 fs-7 fw-bold me-2 d-block lh-1 pb-1">Renta # {{ firstPayment.id
+                        }}</span>
+                      <span class="text-gray-800 text-primary fs-1 fw-bold">{{ firstPayment.icode }}</span>
+                    </div>
+                    <div class="d-flex align-items-center flex-wrap d-grid gap-2">
+                      <div class="d-flex align-items-center me-5 me-xl-13">
+                        <div class="symbol symbol-30px symbol-circle me-3">
+                          <img [src]="baseUrl + firstPayment.eimage" />
+                        </div>
+                        <div class="m-0">
+                          <span class="fw-semibold text-gray-400 d-block fs-8">Inquilino</span>
+                          <span class="fw-bold text-gray-800 text-primary fs-7">{{ firstPayment.ename }}</span>
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <div class="symbol symbol-30px symbol-circle me-3">
+                          <span class="symbol-label bg-success">
+                            <span class="svg-icon svg-icon-5 svg-icon-white">
+                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                  d="M18 21.6C16.6 20.4 9.1 20.3 6.3 21.2C5.7 21.4 5.1 21.2 4.7 20.8L2 18C4.2 15.8 10.8 15.1 15.8 15.8C16.2 18.3 17 20.5 18 21.6ZM18.8 2.8C18.4 2.4 17.8 2.20001 17.2 2.40001C14.4 3.30001 6.9 3.2 5.5 2C6.8 3.3 7.4 5.5 7.7 7.7C9 7.9 10.3 8 11.7 8C15.8 8 19.8 7.2 21.5 5.5L18.8 2.8Z"
+                                  fill="currentColor" />
+                                <path opacity="0.3"
+                                  d="M21.2 17.3C21.4 17.9 21.2 18.5 20.8 18.9L18 21.6C15.8 19.4 15.1 12.8 15.8 7.8C18.3 7.4 20.4 6.70001 21.5 5.60001C20.4 7.00001 20.2 14.5 21.2 17.3ZM8 11.7C8 9 7.7 4.2 5.5 2L2.8 4.8C2.4 5.2 2.2 5.80001 2.4 6.40001C2.7 7.40001 3.00001 9.2 3.10001 11.7C3.10001 15.5 2.40001 17.6 2.10001 18C3.20001 16.9 5.3 16.2 7.8 15.8C8 14.2 8 12.7 8 11.7Z"
+                                  fill="currentColor" />
+                              </svg>
+                            </span>
+                          </span>
+                        </div>
+                        <div class="m-0">
+                          <span class="fw-semibold text-gray-400 d-block fs-8">Fecha</span>
+                          <span class="fw-bold text-gray-800 text-primary fs-7">{{ firstPayment.startdate
+                            }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex flex-column border border-1 border-gray-300 text-center pt-5 pb-7 mb-8 card-rounded">
+                    <span class="fw-semibold text-gray-600 fs-7 pb-1">Monto</span>
+                    <span class="fw-bold text-gray-800 fs-2hx lh-1 pb-1">{{ firstPayment.amount | currency }}</span>
+                    <span class="fw-bold text-gray-600 fs-4 pb-5"> {{ firstPayment.currency }}</span>
+                    <span class="fw-semibold text-gray-600 fs-7 pb-1">Vence en</span>
+                    <span class="fw-bold text-gray-800 fs-3">{{ firstPayment.enddate }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xxl-3">
+        <div class="card card-flush h-xl-100">
+          <div class="card-body text-center pb-5">
+            <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded mb-7"
+              style="height: 266px;" [ngStyle]="{ 'background-image': 'url(' + baseUrl + firstContract.eimage + ')'}">
+            </div>
+            <div class="d-flex align-items-end flex-stack mb-1">
+              <div class="text-start">
+                <span class="fw-bold text-gray-800 cursor-pointer text-primary fs-4 d-block">{{
+                  firstContract.ename }} </span>
+                <span class="text-gray-400 mt-1 fw-bold fs-6">{{ firstContract.eemail }}</span>
+              </div>
+              <span class="text-gray-600 text-end fw-bold fs-6">{{
+                firstContract.total | currency }} {{ firstContract.currency }}</span>
+            </div>
+          </div>
+          <div class="card-footer d-flex flex-stack pt-0">
+            <a class="flex-shrink-0 me-2">{{ firstContract.enddate }}</a>
+            <a class="flex-shrink-0 me-2">Contrato # {{ firstContract.id }}</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xxl-3">
+        <div class="card card-flush h-xl-100">
+          <div class="card-body text-center pb-5">
+            <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded mb-7"
+              style="height: 266px;" [ngStyle]="{ 'background-image': 'url(' + baseUrl + firstExpense.iimage + ')'}">
+            </div>
+            <div class="d-flex align-items-end flex-stack mb-1">
+              <div class="text-start">
+                <span class="fw-bold text-gray-800 cursor-pointer text-primary fs-4 d-block">{{
+                  firstExpense.categoryname }} </span>
+                <span class="text-gray-400 mt-1 fw-bold fs-6">{{ firstExpense.description }}</span>
+              </div>
+              <span class="text-gray-600 text-end fw-bold fs-6">{{
+                firstExpense.amount | currency }} {{ firstExpense.currency }}</span>
+            </div>
+          </div>
+          <div class="card-footer d-flex flex-stack pt-0">
+            <a class="flex-shrink-0 me-2">{{ firstExpense.expensedate }}</a>
+            <a class="flex-shrink-0 me-2">Contrato # {{ firstExpense.saleid }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+      <div class="col-xl-4">
+        <div class="card card-flush h-xl-100">
+          <div class="card-header pt-7">
+            <h3 class="card-title align-items-start flex-column">
+              <span class="card-label fw-bold text-gray-800">Contratos por vencer</span>
+            </h3>
+            <div class="card-toolbar"></div>
+          </div>
+          <div class="card-body pt-5">
+            <ng-container *ngFor="let item of allContractFiltered">
+              <div class="d-flex flex-stack">
+                <div class="d-flex align-items-center me-5">
+                  <img [src]="baseUrl + item.eimage" class="me-4 w-30px">
+                  <div class="me-5">
+                    <span class="text-gray-800 fw-bold text-primary fs-6">{{ item.ename }}</span>
+                    <span class="text-gray-400 fw-semibold fs-7 d-block text-start ps-0">{{ item.eemail }}</span>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center">
+                  <div class="me-5">
+                    <span class="text-gray-800 fw-bold text-primary fs-6">{{ item.enddate }}</span>
+                    <span class="text-gray-400 fw-semibold fs-7 d-block text-start ps-0">{{ item.total | currency
+                      }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="separator separator-dashed my-3"></div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-8">
+        <div class="card card-flush h-xl-100">
+          <div class="card-header pt-7">
+            <h3 class="card-title align-items-start flex-column">
+              <span class="card-label fw-bold text-gray-800">Contratos Recientes</span>
+            </h3>
+          </div>
+          <div class="card-body pt-3 pb-4">
+            <div class="table-responsive">
+              <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
+                <thead>
+                  <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                    <th class="min-w-75px">Contrato</th>
+                    <th class="min-w-75px">Inquilino</th>
+                    <th class="min-w-75px text-center">Inicio</th>
+                    <th class="min-w-75px text-center">Termina</th>
+                    <th class="min-w-75px text-center">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="text-gray-600 fw-semibold">
+                  <ng-container *ngFor="let item of allContract | slice:0:3">
+                    <tr class="fs-7 fw-bold text-gray-500 border-bottom-0">
+                      <td rowspan="2">
+                        <div class="d-flex align-items-center">
+                          <a class="symbol symbol-100px">
+                            <img [src]="baseUrl + item.iimage">
+                          </a>
+                        </div>
+                      </td>
+                      <td class="text-start">
+                        <div class="ms-5">
+                          <span class="text-gray-800 text-primary fs-5 fw-bold">
+                            <strong>{{ item.icode }}</strong>
+                          </span>
+                        </div>
+                      </td>
+                      <td class="text-start" colspan="4">
+                        <div class="ms-5">
+                          <span class="text-gray-800 text-primary fs-5 fw-bold">
+                            <small>{{ item.ifulladdress }}</small>
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-start">
+                        <div class="d-flex align-items-center">
+                          <a class="symbol symbol-35px">
+                            <img [src]="baseUrl +  item.eimage">
+                          </a>
+                          <div class="ms-5">
+                            <a class="text-gray-800 text-primary fs-5 fw-bold">
+                              <strong>{{ item.ename | titlecase }}</strong>
+                              <br /><small> {{ item.eemail }}</small>
+                            </a>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-center">{{ item.startdate }}</td>
+                      <td class="text-center">{{ item.enddate }}</td>
+                      <td class="text-center">
+                        <div
+                          class="badge {{ item.status == 'inactivo' ? 'badge-light-danger' : 'badge-light-success' }}">
+                          {{ item.status }}</div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <tr *ngIf=" allContract.length == 0">
+                    <td colspan="9" class="text-center">No hay datos</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row g-5 g-xl-10">
+      <div class="col-xl-4">
+        <div class="card card-flush h-xl-100">
+          <div class="card-header pt-7">
+            <h3 class="card-title align-items-start flex-column">
+              <span class="card-label fw-bold text-gray-800">Servicios por Hacer</span>
+            </h3>
+            <div class="card-toolbar"></div>
+          </div>
+          <div class="card-body pt-5">
+            <div class="">
+              <ng-container *ngFor="let item of allExpenseFiltered | slice:0:06">
+                <div class="d-flex flex-stack">
+                  <div class="d-flex align-items-center me-5">
+                    <div class="me-5">
+                      <span class="text-gray-800 fw-bold text-primary fs-6">{{ item.expensedate }}</span>
+                      <span class="text-gray-400 fw-semibold fs-7 d-block text-start ps-0"> {{ item.description
+                        }}</span>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <div class="me-5">
+                      <span class="text-gray-800 fw-bold text-primary fs-6">{{ item.categoryname | lowercase }}</span>
+                      <span class="text-gray-400 fw-semibold fs-7 d-block text-end">{{ item.amount | currency }}
+                        {{ item.currency }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="separator separator-dashed my-3"></div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-8">
+        <div class="card card-flush h-xl-100">
+          <div class="card-header pt-7">
+            <h3 class="card-title align-items-start flex-column">
+              <span class="card-label fw-bold text-gray-800">Servicios Recientes</span>
+            </h3>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
+                <thead>
+                  <tr class="fs-7 fw-bold text-gray-400 border-bottom-0">
+                    <th class="min-w-100px text-center "># Servicio</th>
+                    <th class="min-w-75px text-center ">Fecha</th>
+                    <th class="min-w-100px"> Descripción</th>
+                    <th class="min-w-75px text-end ">Cantidad</th>
+                    <th class="min-w-75px text-center ">Categoría</th>
+                    <th class="min-w-100px text-center ">Contrato</th>
+                  </tr>
+                </thead>
+                <tbody class="fw-semibold text-gray-600">
+                  <tr *ngFor="let item of allExpense | slice:0:8">
+                    <td class="text-center">
+                      <span class="text-gray-800 text-primary fs-5 fw-bold"># {{ item.id }}</span>
+                    </td>
+                    <td class="text-center">{{ item.expensedate }}</td>
+                    <td class="pe-0">{{ item.description }}</td>
+                    <td class="text-end pe-0">{{ item.amount | currency }} {{ item.currency }}</td>
+                    <td class="text-center pe-0">
+                      <div class="badge badge-light-warning"> {{ item.categoryname | lowercase }}</div>
+                    </td>
+                    <td class="text-center pe-0">
+                      <a class="text-gray-800 text-primary fs-5"> # {{ item.saleid }} </a>
+                    </td>
+                  </tr>
+                  <tr *ngIf=" allExpense.length == 0">
+                    <td colspan="7" class="text-center">No hay datos</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+      <div class="col-xl-4">
+        <div class="card card-flush h-xl-100">
+          <div class="card-header pt-7">
+            <h3 class="card-title align-items-start flex-column">
+              <span class="card-label fw-bold text-gray-800">Rentas por vencer</span>
+            </h3>
+            <div class="card-toolbar"></div>
+          </div>
+          <div class="card-body pt-5">
+            <ng-container *ngFor="let item of allRent | slice:0:12">
+              <div class="d-flex flex-stack">
+                <div class="d-flex align-items-center me-5">
+                  <div class="me-5">
+                    <span class="text-gray-800 fw-bold text-primary fs-6">{{ item.pmonth | titlecase }}</span>
+                    <span class="text-gray-400 fw-semibold fs-7 d-block text-start ps-0"> {{ item.pyear }}</span>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center">
+                  <div class="badge badge-light-warning"> {{ item.method | titlecase }} {{ item.amount | currency }} {{
+                    item.currency }}</div>
+                  <div class="m-0">
+                    <span class="badge badge-light-success fs-base"># {{ item.saleid }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="separator separator-dashed my-3"></div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-8">
+        <div class="card card-flush h-xl-100">
+          <div class="card-header pt-7">
+            <h3 class="card-title align-items-start flex-column">
+              <span class="card-label fw-bold text-gray-800">Rentas Recientes</span>
+            </h3>
+          </div>
+          <div class="card-body pt-3 pb-4">
+            <div class="table-responsive">
+              <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
+                <thead>
+                  <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                    <th class="min-w-75px"># Contrato</th>
+                    <th class="min-w-75px text-center">Inicio</th>
+                    <th class="min-w-75px text-center">Termina</th>
+                    <th class="min-w-50px text-center">Año</th>
+                    <th class="min-w-50px text-center">Mes</th>
+                    <th class="min-w-150px text-end">Contratado</th>
+                  </tr>
+                </thead>
+                <tbody class="text-gray-600 fw-semibold">
+                  <ng-container *ngFor="let item of allPayment | slice:0:05">
+                    <tr>
+                      <td rowspan="2">
+                        <div class="d-flex align-items-center">
+                          <a class="symbol symbol-100px">
+                            <img [src]="baseUrl + item.iimage">
+                          </a>
+                        </div>
+                      </td>
+                      <td class="text-start" colspan="3">
+                        <div class="ms-5">
+                          <span class="text-gray-800 text-primary fs-5 fw-bold">
+                            <strong>{{ item.icode }}</strong>
+                          </span>
+                        </div>
+                      </td>
+                      <td class="text-start" colspan="4">
+                        <div class="ms-5">
+                          <span class="text-gray-800 text-primary fs-5 fw-bold">
+                            <small>{{ item.ifulladdress }}</small>
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-center">{{ item.sstartdate }}</td>
+                      <td class="text-center">{{ item.senddate }}</td>
+                      <td class="text-center">{{ item.pyear }}</td>
+                      <td class="text-center">{{ item.pmonth | titlecase }}</td>
+                      <td class="text-end">{{ item.stotal | currency }} {{ item.scurrency }}</td>
+                    </tr>
+                  </ng-container>
+                  <tr *ngIf="allPayment.length == 0">
+                    <td colspan="9" class="text-center">No hay datos</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+      <div class="col-xl-12">
+        <div class="card card-flush h-xl-100">
+          <div class="card-header pt-7">
+            <h3 class="card-title align-items-start flex-column">
+              <span class="card-label fw-bold text-gray-800">Pagos Recientes</span>
+            </h3>
+          </div>
+          <div class="card-body pt-3 pb-4">
+            <div class="table-responsive">
+              <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
+                <thead>
+                  <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                    <th class="min-w-75px"># Recibo</th>
+                    <th class="min-w-50px text-center">Mes</th>
+                    <th class="min-w-50px text-center">Año</th>
+                    <th class="min-w-150px text-center">Fecha de Pago</th>
+                    <th class="min-w-50px text-center">Metodo</th>
+                    <th class="min-w-100px text-end">Monto</th>
+                    <th class="min-w-50px text-center">Status</th>
+                    <th class="min-w-100px text-center"># Contrato</th>
+                  </tr>
+                </thead>
+                <tbody class="text-gray-600 fw-semibold">
+                  <ng-container *ngFor="let item of allPayment | slice:0:8">
+                    <tr>
+                      <td class="text-center" class="symbol symbol-20px">
+                        <span data-bs-toggle="modal" data-bs-target="#kt_modal_view_payment"
+                          class="text-gray-800 text-primary fs-5 fw-bold"># {{ item.id }}</span>
+                      </td>
+                      <td class="text-center">{{ item.pmonth | titlecase }} </td>
+                      <td class="text-center">{{ item.pyear }} </td>
+                      <td class="text-center">{{ item.created_at }} </td>
+                      <td class="text-center">{{ item.method | titlecase }} </td>
+                      <td class="text-end">{{ item.amount | currency }} {{ item.currency }}</td>
+                      <td class="text-center">
+                        <div class="badge badge-light-success">{{ item.status }}</div>
+                      </td>
+                      <td class="text-center pe-0">
+                        <span class="text-gray-800 text-primary fs-5 "># {{ item.saleid }} </span>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <tr *ngIf=" allContract.length == 0">
+                    <td colspan="8" class="text-center">No hay datos</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-container container-xxl" *ngIf="user.role == 'recepcion'">
+    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+      <div class="col-xxl-6">
+        <div class="card card-flush h-xl-100">
+          <div class="card-body py-9">
+            <div class="row gx-9 h-100">
+              <div class="col-sm-6 mb-10 mb-sm-0">
+                <div
+                  class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-200px h-100"
+                  [ngStyle]="{ 'background-image': 'url(' + baseUrl + firstPayment.iimage + ')'}"></div>
+              </div>
+              <div class="col-sm-6">
+                <div class="d-flex flex-column h-100">
+                  <div class="mb-7">
+                    <div class="mb-6">
+                      <span class="text-gray-400 fs-7 fw-bold me-2 d-block lh-1 pb-1">Renta # {{ firstPayment.id
+                        }}</span>
+                      <span class="text-gray-800 text-primary fs-1 fw-bold">{{ firstPayment.icode }}</span>
+                    </div>
+                    <div class="d-flex align-items-center flex-wrap d-grid gap-2">
+                      <div class="d-flex align-items-center me-5 me-xl-13">
+                        <div class="symbol symbol-30px symbol-circle me-3">
+                          <img [src]="baseUrl + firstPayment.eimage" />
+                        </div>
+                        <div class="m-0">
+                          <span class="fw-semibold text-gray-400 d-block fs-8">Inquilino</span>
+                          <span class="fw-bold text-gray-800 text-primary fs-7">{{ firstPayment.ename }}</span>
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <div class="symbol symbol-30px symbol-circle me-3">
+                          <span class="symbol-label bg-success">
+                            <span class="svg-icon svg-icon-5 svg-icon-white">
+                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                  d="M18 21.6C16.6 20.4 9.1 20.3 6.3 21.2C5.7 21.4 5.1 21.2 4.7 20.8L2 18C4.2 15.8 10.8 15.1 15.8 15.8C16.2 18.3 17 20.5 18 21.6ZM18.8 2.8C18.4 2.4 17.8 2.20001 17.2 2.40001C14.4 3.30001 6.9 3.2 5.5 2C6.8 3.3 7.4 5.5 7.7 7.7C9 7.9 10.3 8 11.7 8C15.8 8 19.8 7.2 21.5 5.5L18.8 2.8Z"
+                                  fill="currentColor" />
+                                <path opacity="0.3"
+                                  d="M21.2 17.3C21.4 17.9 21.2 18.5 20.8 18.9L18 21.6C15.8 19.4 15.1 12.8 15.8 7.8C18.3 7.4 20.4 6.70001 21.5 5.60001C20.4 7.00001 20.2 14.5 21.2 17.3ZM8 11.7C8 9 7.7 4.2 5.5 2L2.8 4.8C2.4 5.2 2.2 5.80001 2.4 6.40001C2.7 7.40001 3.00001 9.2 3.10001 11.7C3.10001 15.5 2.40001 17.6 2.10001 18C3.20001 16.9 5.3 16.2 7.8 15.8C8 14.2 8 12.7 8 11.7Z"
+                                  fill="currentColor" />
+                              </svg>
+                            </span>
+                          </span>
+                        </div>
+                        <div class="m-0">
+                          <span class="fw-semibold text-gray-400 d-block fs-8">Fecha</span>
+                          <span class="fw-bold text-gray-800 text-primary fs-7">{{ firstPayment.startdate
+                            }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex flex-column border border-1 border-gray-300 text-center pt-5 pb-7 mb-8 card-rounded">
+                    <span class="fw-semibold text-gray-600 fs-7 pb-1">Monto</span>
+                    <span class="fw-bold text-gray-800 fs-2hx lh-1 pb-1">{{ firstPayment.amount | currency }}</span>
+                    <span class="fw-bold text-gray-600 fs-4 pb-5"> {{ firstPayment.currency }}</span>
+                    <span class="fw-semibold text-gray-600 fs-7 pb-1">Vence en</span>
+                    <span class="fw-bold text-gray-800 fs-3">{{ firstPayment.enddate }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xxl-3">
+        <div class="card card-flush h-xl-100">
+          <div class="card-body text-center pb-5">
+            <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded mb-7"
+              style="height: 266px;" [ngStyle]="{ 'background-image': 'url(' + baseUrl + firstContract.eimage + ')'}">
+            </div>
+            <div class="d-flex align-items-end flex-stack mb-1">
+              <div class="text-start">
+                <span class="fw-bold text-gray-800 cursor-pointer text-primary fs-4 d-block">{{
+                  firstContract.ename }} </span>
+                <span class="text-gray-400 mt-1 fw-bold fs-6">{{ firstContract.eemail }}</span>
+              </div>
+              <span class="text-gray-600 text-end fw-bold fs-6">{{
+                firstContract.total | currency }} {{ firstContract.currency }}</span>
+            </div>
+          </div>
+          <div class="card-footer d-flex flex-stack pt-0">
+            <a class="flex-shrink-0 me-2">{{ firstContract.enddate }}</a>
+            <a class="flex-shrink-0 me-2">Contrato # {{ firstContract.id }}</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xxl-3">
+        <div class="card card-flush h-xl-100">
+          <div class="card-body text-center pb-5">
+            <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded mb-7"
+              style="height: 266px;" [ngStyle]="{ 'background-image': 'url(' + baseUrl + firstExpense.iimage + ')'}">
+            </div>
+            <div class="d-flex align-items-end flex-stack mb-1">
+              <div class="text-start">
+                <span class="fw-bold text-gray-800 cursor-pointer text-primary fs-4 d-block">{{
+                  firstExpense.categoryname }} </span>
+                <span class="text-gray-400 mt-1 fw-bold fs-6">{{ firstExpense.description }}</span>
+              </div>
+              <span class="text-gray-600 text-end fw-bold fs-6">{{
+                firstExpense.amount | currency }} {{ firstExpense.currency }}</span>
+            </div>
+          </div>
+          <div class="card-footer d-flex flex-stack pt-0">
+            <a class="flex-shrink-0 me-2">{{ firstExpense.expensedate }}</a>
+            <a class="flex-shrink-0 me-2">Contrato # {{ firstExpense.saleid }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+      <div class="col-xl-4">
+        <div class="card card-flush h-xl-100">
+          <div class="card-header pt-7">
+            <h3 class="card-title align-items-start flex-column">
+              <span class="card-label fw-bold text-gray-800">Contratos por vencer</span>
+            </h3>
+            <div class="card-toolbar"></div>
+          </div>
+          <div class="card-body pt-5">
+            <ng-container *ngFor="let item of allContractFiltered">
+              <div class="d-flex flex-stack">
+                <div class="d-flex align-items-center me-5">
+                  <img [src]="baseUrl + item.eimage" class="me-4 w-30px">
+                  <div class="me-5">
+                    <span class="text-gray-800 fw-bold text-primary fs-6">{{ item.ename }}</span>
+                    <span class="text-gray-400 fw-semibold fs-7 d-block text-start ps-0">{{ item.eemail }}</span>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center">
+                  <div class="me-5">
+                    <span class="text-gray-800 fw-bold text-primary fs-6">{{ item.enddate }}</span>
+                    <span class="text-gray-400 fw-semibold fs-7 d-block text-start ps-0">{{ item.total | currency
+                      }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="separator separator-dashed my-3"></div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-8">
+        <div class="card card-flush h-xl-100">
+          <div class="card-header pt-7">
+            <h3 class="card-title align-items-start flex-column">
+              <span class="card-label fw-bold text-gray-800">Contratos Recientes</span>
+            </h3>
+          </div>
+          <div class="card-body pt-3 pb-4">
+            <div class="table-responsive">
+              <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
+                <thead>
+                  <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                    <th class="min-w-75px">Contrato</th>
+                    <th class="min-w-75px">Inquilino</th>
+                    <th class="min-w-75px text-center">Inicio</th>
+                    <th class="min-w-75px text-center">Termina</th>
+                    <th class="min-w-75px text-center">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="text-gray-600 fw-semibold">
+                  <ng-container *ngFor="let item of allContract | slice:0:3">
+                    <tr class="fs-7 fw-bold text-gray-500 border-bottom-0">
+                      <td rowspan="2">
+                        <div class="d-flex align-items-center">
+                          <a class="symbol symbol-100px">
+                            <img [src]="baseUrl + item.iimage">
+                          </a>
+                        </div>
+                      </td>
+                      <td class="text-start">
+                        <div class="ms-5">
+                          <span class="text-gray-800 text-primary fs-5 fw-bold">
+                            <strong>{{ item.icode }}</strong>
+                          </span>
+                        </div>
+                      </td>
+                      <td class="text-start" colspan="4">
+                        <div class="ms-5">
+                          <span class="text-gray-800 text-primary fs-5 fw-bold">
+                            <small>{{ item.ifulladdress }}</small>
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-start">
+                        <div class="d-flex align-items-center">
+                          <a class="symbol symbol-35px">
+                            <img [src]="baseUrl +  item.eimage">
+                          </a>
+                          <div class="ms-5">
+                            <a class="text-gray-800 text-primary fs-5 fw-bold">
+                              <strong>{{ item.ename | titlecase }}</strong>
+                              <br /><small> {{ item.eemail }}</small>
+                            </a>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-center">{{ item.startdate }}</td>
+                      <td class="text-center">{{ item.enddate }}</td>
+                      <td class="text-center">
+                        <div
+                          class="badge {{ item.status == 'inactivo' ? 'badge-light-danger' : 'badge-light-success' }}">
+                          {{ item.status }}</div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <tr *ngIf=" allContract.length == 0">
+                    <td colspan="9" class="text-center">No hay datos</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row g-5 g-xl-10">
+      <div class="col-xl-4">
+        <div class="card card-flush h-xl-100">
+          <div class="card-header pt-7">
+            <h3 class="card-title align-items-start flex-column">
+              <span class="card-label fw-bold text-gray-800">Servicios por Hacer</span>
+            </h3>
+            <div class="card-toolbar"></div>
+          </div>
+          <div class="card-body pt-5">
+            <div class="">
+              <ng-container *ngFor="let item of allExpenseFiltered | slice:0:06">
+                <div class="d-flex flex-stack">
+                  <div class="d-flex align-items-center me-5">
+                    <div class="me-5">
+                      <span class="text-gray-800 fw-bold text-primary fs-6">{{ item.expensedate }}</span>
+                      <span class="text-gray-400 fw-semibold fs-7 d-block text-start ps-0"> {{ item.description
+                        }}</span>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <div class="me-5">
+                      <span class="text-gray-800 fw-bold text-primary fs-6">{{ item.categoryname | lowercase }}</span>
+                      <span class="text-gray-400 fw-semibold fs-7 d-block text-end">{{ item.amount | currency }}
+                        {{ item.currency }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="separator separator-dashed my-3"></div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-8">
+        <div class="card card-flush h-xl-100">
+          <div class="card-header pt-7">
+            <h3 class="card-title align-items-start flex-column">
+              <span class="card-label fw-bold text-gray-800">Servicios Recientes</span>
+            </h3>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-row-dashed align-middle gs-0 gy-3 my-0">
+                <thead>
+                  <tr class="fs-7 fw-bold text-gray-400 border-bottom-0">
+                    <th class="min-w-100px text-center "># Servicio</th>
+                    <th class="min-w-75px text-center ">Fecha</th>
+                    <th class="min-w-100px"> Descripción</th>
+                    <th class="min-w-75px text-end ">Cantidad</th>
+                    <th class="min-w-75px text-center ">Categoría</th>
+                    <th class="min-w-100px text-center ">Contrato</th>
+                  </tr>
+                </thead>
+                <tbody class="fw-semibold text-gray-600">
+                  <tr *ngFor="let item of allExpense | slice:0:8">
+                    <td class="text-center">
+                      <span class="text-gray-800 text-primary fs-5 fw-bold"># {{ item.id }}</span>
+                    </td>
+                    <td class="text-center">{{ item.expensedate }}</td>
+                    <td class="pe-0">{{ item.description }}</td>
+                    <td class="text-end pe-0">{{ item.amount | currency }} {{ item.currency }}</td>
+                    <td class="text-center pe-0">
+                      <div class="badge badge-light-warning"> {{ item.categoryname | lowercase }}</div>
+                    </td>
+                    <td class="text-center pe-0">
+                      <a class="text-gray-800 text-primary fs-5"> # {{ item.saleid }} </a>
+                    </td>
+                  </tr>
+                  <tr *ngIf=" allExpense.length == 0">
+                    <td colspan="7" class="text-center">No hay datos</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

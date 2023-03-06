@@ -1,0 +1,152 @@
+<div class="d-flex flex-column flex-xl-row">
+    <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
+        <div class="card mb-5 mb-xl-8">
+            <div class="card-body pt-15">
+                <div class="d-flex flex-center flex-column mb-5">
+                    <div class="symbol symbol-150px mb-10"> <img [src]="baseUrl +  heroe.image" /> </div>
+                    <span class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1">{{ heroe.name }}</span>
+                    <span class="fs-5 fw-semibold text-muted text-hover-primary mb-6">{{ heroe.email
+                        }}</span>
+                    <span class="fs-5 fw-semibold text-muted text-hover-primary mb-6">{{ heroe.phone
+                        }}</span>
+                </div>
+                <div class="d-flex flex-stack fs-4 py-3">
+                    <div class="fw-bold">Details</div>
+                    <div class="badge {{ heroe.status == 'inactivo' ? 'badge-light-danger' : 'badge-light-success' }}">
+                        {{ heroe.status }}</div>
+                </div>
+                <div class="separator separator-dashed my-3"></div>
+                <div class="pb-5 fs-6">
+                    <div class="fw-bold mt-5">Género</div>
+                    <div class="text-gray-600 text-hover-primary">{{ heroe.gender }}</div>
+                    <div class="fw-bold mt-5">Nacionalidad</div>
+                    <div class="text-gray-600">{{ heroe.nationality }}</div>
+                    <div class="fw-bold mt-5">Documento de registro</div>
+                    <div class="text-gray-600">{{ heroe.doctype }} : {{ heroe.docnumber }}</div>
+                    <div class="fw-bold mt-5">Fecha de Nacimiento</div>
+                    <div class="text-gray-600">{{ heroe.dob }}</div>
+                    <div class="fw-bold mt-5">Datos Fiscales</div>
+                    <div class="text-gray-600">{{ heroe.dni }} </div>
+                    <div class="text-gray-600">{{ heroe.fiscalname }}</div>
+                    <div class="text-gray-600">{{ heroe.fulladdress }}</div>
+                </div>
+                <button type="button" [routerLink]="['edit']" class="btn btn-primary">
+                    <span class="indicator-label">Editar</span>
+                    <span class="indicator-progress">Un momento porfavor...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="flex-lg-row-fluid ms-lg-15">
+        <div class="tab-content">
+            <div class="card pt-4 mb-6 mb-xl-9">
+                <div class="card-header border-0">
+                    <div class="card-title">
+                        <h2 [routerLink]="['../../administracion-de-contratos']">Historial de Contratos</h2>
+                    </div>
+                </div>
+                <div class="card-body pt-0 pb-5">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5">
+                        <thead>
+                            <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                                <th class="min-w-100px text-center"># Contrato</th>
+                                <th class="min-w-150px">Inmueble</th>
+                                <th class="min-w-100px text-center">Total</th>
+                                <th class="min-w-100px text-center">Inicio</th>
+                                <th class="min-w-100px text-center">Termina</th>
+                                <th class="min-w-75px text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 fw-semibold">
+                            <tr *ngFor="let item of allContract | slice:0:50">
+                                <td class="text-center">
+                                    <div class="ms-5">
+                                        <a [routerLink]="['../../administracion-de-contratos/', item.itemid]"
+                                            class="text-gray-800 text-hover-primary fs-5 fw-bold">
+                                            <strong># {{ item.id }}</strong>
+                                            <br /><small>{{ item.type }}</small>
+                                        </a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a [routerLink]="['../../administracion-de-inmuebles/', item.itemid]"
+                                            class="symbol symbol-50px">
+                                            <img [src]="baseUrl + item.iimage">
+                                        </a>
+                                        <div class="ms-5">
+                                            <a [routerLink]="['../../administracion-de-inmuebles/', item.itemid]"
+                                                class="text-gray-800 text-hover-primary fs-5 fw-bold">
+                                                <strong>{{ item.icode }}</strong>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">{{ item.total | currency }} {{ item.currency | uppercase
+                                    }}</td>
+                                <td class="text-center">{{ item.startdate }}</td>
+                                <td class="text-center">{{ item.enddate }}</td>
+                                <td class="text-center">
+                                    <div
+                                        class="badge {{ item.status == 'inactivo' ? 'badge-light-danger' : 'badge-light-success' }}">
+                                        {{ item.status }}</div>
+                                </td>
+                            </tr>
+                            <tr *ngIf=" allContract.length == 0">
+                                <td colspan="7" class="text-center">No hay datos</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card pt-4 mb-6 mb-xl-9">
+                <div class="card-header border-0">
+                    <div class="card-title">
+                        <h2 [routerLink]="['../../administracion-de-contratos']">Historial de Pagos</h2>
+                    </div>
+                </div>
+                <div class="card-body pt-0 pb-5">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5">
+                        <thead>
+                            <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                <th class="min-w-100px text-center"># Recibo</th>
+                                <th class="min-w-100px text-center">Forma</th>
+                                <th class="min-w-100px text-center">Período</th>
+                                <th class="min-w-100px text-center">Monto</th>
+                                <th class="min-w-50px text-center">Status</th>
+                                <th class="min-w-150px text-center">Fecha</th>
+                                <th class="min-w-100px text-center"># Contrato</th>
+                            </tr>
+                        </thead>
+                        <tbody class="fw-semibold text-gray-600">
+                            <tr *ngFor="let item of allPayment | slice:0:50">
+                                <td class="text-center">
+                                    <span class="text-gray-800 text-hover-primary fs-5 fw-bold"># {{ item.id
+                                        }}</span>
+                                </td>
+                                <td class="text-center">{{ item.method }} </td>
+                                <td class="text-center">{{ item.pyear }} {{ item.pmonth | titlecase }} </td>
+                                <td class="text-center">{{ item.amount | currency }} {{ item.currency }}</td>
+                                <td class="text-center">
+                                    <div class="badge badge-light-success">{{ item.status }}</div>
+                                </td>
+                                <td class="text-center">{{ item.created_at }}</td>
+                                <td class="text-center pe-0">
+                                    <a [routerLink]="['../../administracion-de-contratos', item.id]"
+                                        class="text-gray-800 text-hover-primary fs-5 "># {{ item.saleid }}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr *ngIf=" allPayment.length == 0">
+                                <td colspan="6" class="text-center">No hay datos</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

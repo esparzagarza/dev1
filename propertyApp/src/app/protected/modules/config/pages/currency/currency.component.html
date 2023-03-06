@@ -1,0 +1,169 @@
+<div class="card pt-4 mb-6 mb-xl-9">
+  <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+    <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+      <div class="w-100 mw-150px">
+        <select class="form-select form-select-solid" data-control="select2" data-hide-search="true"
+          data-placeholder="Status" [ngModel]="selectedStatus" (ngModelChange)="getAllDataByStatus($event)">
+          <option value="">Status</option>
+          <option *ngFor="let item of modules.basestatus" value="{{ item }}">{{ item | titlecase }}
+          </option>
+        </select>
+      </div>
+      <button (click)="resetForm(true)" type="button" class="btn btn-primary">
+        <span class="svg-icon svg-icon-2">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)"
+              fill="currentColor" />
+            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
+          </svg>
+        </span>
+        Nuevo
+      </button>
+    </div>
+  </div>
+  <div class="card-body pt-0 pb-5" *ngIf="!shorForm">
+    <table class="table align-middle table-row-dashed gy-5" id="kt_table_customers_payment">
+      <thead class="border-bottom border-gray-200 fs-7 fw-bold">
+        <tr class="text-start text-muted text-uppercase gs-0">
+          <th>Nombre</th>
+          <th>Código</th>
+          <th class="text-center">Paridad</th>
+          <th class="text-center">Status</th>
+          <th class="text-center">Fecha</th>
+          <th class="min-w-70px text-center">Acción</th>
+        </tr>
+      </thead>
+      <tbody class="fs-6 fw-semibold text-gray-600">
+        <tr *ngFor="let item of allDataByStatus">
+          <td (click)="selectHeroe(item)">
+            <div class="d-flex align-items-center">
+              <div class="ms-5">
+                <span class="text-gray-800 text-hover-primary fs-5 fw-bold">
+                  <strong>{{ item.name }}</strong>
+                </span>
+              </div>
+            </div>
+          </td>
+          <td (click)="selectHeroe(item)">
+            <div class="d-flex align-items-center">
+              <div class="ms-5">
+                <span class="text-gray-800 text-hover-primary fs-5 fw-bold">
+                  <strong>{{ item.currency_code }}</strong>
+                </span>
+              </div>
+            </div>
+          </td>
+          <td class="text-center">{{ item.symbol }} {{ item.amount }}</td>
+          <td class="text-end pe-0 text-center" data-order="item.status">
+            <div class="badge {{ item.status == 'inactivo' ? 'badge-light-danger' : 'badge-light-success' }}">
+              {{
+              item.status }}</div>
+          </td>
+          <td class="text-center">{{ item.created_at }}</td>
+          <td class="text-end text-center">
+            <a (click)="selectHeroe(item)" class="symbol symbol-20px">
+              <img src="assets/media/icons/edit-button.svg" />
+            </a>
+          </td>
+        </tr>
+        <tr *ngIf=" allDataByStatus.length == 0">
+          <td colspan="6" class="text-center">No hay datos</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-body pt-0 pb-5" *ngIf="shorForm">
+    <form class="form" autocomplete="off" [formGroup]="letsdoitForm" (ngSubmit)="saveItem()">
+      <div class="row row-cols-1 row-cols-sm-3 rol-cols-md-1 row-cols-lg-3">
+        <div class="col">
+          <div class="fv-row mb-7">
+            <label class="fs-6 fw-semibold form-label mb-2 required">
+              <span>Código</span>
+            </label>
+            <select class="form-select mb-2" [(ngModel)]="heroe.currency_code" formControlName="currency_code"
+              (ngModelChange)="changecurrency($event)">
+              <option *ngFor="let item of modules.basecurrency" value="{{ item.ccode }}">{{ item.ccode }}
+              </option>
+            </select>
+            <div class="text-muted fs-7">Seleccione la moneda, default USD</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="fv-row w-100 flex-md-root">
+            <label class="form-label required">Simbolo</label>
+            <input type="text" class="form-control mb-2" formControlName="symbol" [(ngModel)]="heroe.symbol"
+              name="symbol" required>
+            <div class="text-muted fs-7">Establezca el simbolo, default $.</div>
+          </div>
+        </div>
+        <div class="fv-row mb-7">
+          <label class="fs-6 fw-semibold form-label mb-2 required">
+            <span>Status</span>
+          </label>
+          <select class="form-select mb-2" [(ngModel)]="heroe.status" formControlName="status">
+            <option *ngFor="let item of modules.basestatus" value="{{ item }}">{{ item | titlecase }}
+            </option>
+          </select>
+          <div class="text-muted fs-7">Seleccione el status.</div>
+        </div>
+      </div>
+      <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+        <div class="col">
+          <div class="fv-row mb-7">
+            <label class="fs-6 fw-semibold form-label mb-2 required">
+              <span>Nombre</span>
+            </label>
+            <input class="form-control form-control-lg form-control-solid" type="text" [(ngModel)]="heroe.name"
+              formControlName="name" autocomplete="off" required>
+            <div class="text-muted fs-7">Establece el nombre.</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="fv-row mb-7">
+            <label class="fs-6 fw-semibold form-label mb-2">
+              <span>Paridad (Tipo de cambio)</span>
+            </label>
+            <input class="form-control form-control-lg form-control-solid" type="number" step=".01" min="1" max="500"
+              [(ngModel)]="heroe.amount" formControlName="amount" autocomplete="off">
+            <div class="text-muted fs-7">Establezca la paridad, default 1</div>
+          </div>
+        </div>
+      </div>
+      <div class="row row-cols-1 row-cols-sm-3 rol-cols-md-1 row-cols-lg-3">
+        <div class="col">
+          <div class="fv-row w-100 flex-md-root">
+            <label class="form-label required">Precisión</label>
+            <input type="text" class="form-control mb-2" formControlName="currency_precision"
+              [(ngModel)]="heroe.currency_precision" name="currency_precision" required>
+            <div class="text-muted fs-7">Establezca la precisión, default 2.</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="fv-row w-100 flex-md-root">
+            <label class="form-label required">Separador Miles</label>
+            <input type="text" class="form-control mb-2" formControlName="thousand_separator"
+              [(ngModel)]="heroe.thousand_separator" name="thousand_separator" required>
+            <div class="text-muted fs-7">Establezca el separador de miles, default ,.</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="fv-row w-100 flex-md-root">
+            <label class="form-label required">Separador Decimal</label>
+            <input type="text" class="form-control mb-2" formControlName="decimal_separator"
+              [(ngModel)]="heroe.decimal_separator" name="decimal_separator" required>
+            <div class="text-muted fs-7">Establezca el separador de miles, default . .</div>
+          </div>
+        </div>
+      </div>
+      <div class='separator separator-dashed my-5'></div>
+      <div class="text-center pt-15">
+        <button (click)="resetForm(false); reload()" type="reset" class="btn btn-light me-3">Volver</button>
+        <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
+          <span class="indicator-label">Enviar</span>
+          <span class="indicator-progress">Un momento porfavor...
+            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

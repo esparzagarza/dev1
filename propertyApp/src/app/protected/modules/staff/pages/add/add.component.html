@@ -1,0 +1,146 @@
+<div id="kt_app_content" class="app-content flex-column-fluid">
+    <div id="kt_app_content_container" class="app-container container-xxl">
+        <div class="d-flex flex-column flex-lg-row">
+            <div class="flex-column flex-lg-row-auto w-lg-250px w-xl-350px mb-10">
+
+                <div class="card card-flush py-4">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <h2>Imágen</h2>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body text-center pt-0">
+
+                        <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3"
+                            data-kt-image-input="true"
+                            [ngStyle]="{ 'background-image': 'url(' + baseUrl + heroe.image + ')'}">
+
+                            <div class="image-input-wrapper w-150px h-150px"></div>
+
+                            <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+
+                                <i class="bi bi-pencil-fill fs-7"></i>
+
+                                <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+
+                            </label>
+
+                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+
+                                <i class="bi bi-x fs-2"></i>
+
+                            </span>
+
+                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+
+                                <i class="bi bi-x fs-2"></i>
+
+                            </span>
+
+                        </div>
+
+                        <div class="text-muted fs-7">Solo se admiten archivos de imagen *.png, *.jpg y *.jpeg.</div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="flex-lg-row-fluid ms-lg-15">
+                <div class="tab-content" id="myTabContent">
+                    <div class="card pt-4 mb-6 mb-xl-9">
+                        <div class="card-header border-0">
+                            <div class="card-title">
+                                <h2>Perfil</h2>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 pb-5">
+                            <form class="form" autocomplete="off" [formGroup]="letsdoitForm" (ngSubmit)="saveItem()">
+                                <div
+                                    class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
+                                    <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10"
+                                                fill="currentColor" />
+                                            <rect x="11" y="14" width="7" height="2" rx="1"
+                                                transform="rotate(-90 11 14)" fill="currentColor" />
+                                            <rect x="11" y="17" width="2" height="2" rx="1"
+                                                transform="rotate(-90 11 17)" fill="currentColor" />
+                                        </svg>
+                                    </span>
+
+                                    <div class="d-flex flex-stack flex-grow-1">
+                                        <div class="fw-semibold">
+                                            <div class="fs-6 text-gray-700">Tenga en cuenta que se requiere una
+                                                dirección de
+                                                correo electrónico válida para completar la verificación de correo
+                                                electrónico.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fv-row mb-7">
+                                    <label class="fs-6 fw-semibold form-label mb-2 required">
+                                        <span>Nombre</span>
+                                    </label>
+                                    <input class="form-control form-control-lg form-control-solid" type="text"
+                                        placeholder="" formControlName="name" autocomplete="off">
+                                </div>
+                                <div class="fv-row mb-7">
+                                    <label class="fs-6 fw-semibold form-label mb-2">
+                                        <span class="required">Correo Electrónico</span>
+                                    </label>
+                                    <input class="form-control form-control-lg form-control-solid" type="email"
+                                        placeholder="" formControlName="email" autocomplete="off" required>
+                                </div>
+                                <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                                    <div class="col">
+                                        <div class="mb-1">
+                                            <label class="form-label fw-semibold fs-6 mb-2 required">Contraseña</label>
+                                            <div class="position-relative mb-3">
+                                                <input class="form-control form-control-lg form-control-solid"
+                                                    type="password" placeholder="" formControlName="password"
+                                                    autocomplete="off" required>
+                                            </div>
+                                        </div>
+                                        <div class="text-muted">Recomendable usar 6 o más caracteres con una combinación
+                                            de
+                                            letras, números y
+                                            simbolos.</div>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label fw-semibold fs-6 mb-2 required">Confirmar
+                                            Contraseña</label>
+                                        <input class="form-control form-control-lg form-control-solid" type="password"
+                                            placeholder="" formControlName="confirm_password" autocomplete="off"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="text-center pt-15">
+                                    <button [routerLink]="['../']" type="reset" class="btn btn-light me-3"
+                                        data-kt-users-modal-action="cancel">Descartar</button>
+                                    <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit"
+                                        [disabled]="letsdoitForm.invalid">
+                                        <span class="indicator-label">Enviar</span>
+                                        <span class="indicator-progress">Un momento porfavor...
+                                            <span
+                                                class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

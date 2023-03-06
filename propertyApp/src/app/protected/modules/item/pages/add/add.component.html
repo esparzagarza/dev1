@@ -1,0 +1,233 @@
+<div id="kt_app_content" class="app-content flex-column-fluid">
+  <div id="kt_app_content_container" class="app-container container-xxl d-flex flex-column flex-lg-row">
+    <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
+      <div class="card card-flush py-4">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>Imágen</h2>
+          </div>
+        </div>
+        <div class="card-body text-center pt-0">
+          <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3"
+            data-kt-image-input="true" [ngStyle]="{ 'background-image': 'url(' + baseUrl + heroe.image + ')'}">
+            <div class="image-input-wrapper w-150px h-150px"></div>
+            <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+              data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+              <i class="bi bi-pencil-fill fs-7"></i>
+              <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+            </label>
+            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+              data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+              <i class="bi bi-x fs-2"></i>
+            </span>
+            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+              data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+              <i class="bi bi-x fs-2"></i>
+            </span>
+          </div>
+          <div class="text-muted fs-7">Imágen del Inmueble. Solo se admiten archivos de imagen *.png, *.jpg y
+            *.jpeg.
+            aceptado</div>
+        </div>
+      </div>
+      <div class="card card-flush py-4">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>Tipo</h2>
+          </div>
+          <div class="card-toolbar">
+            <div class="rounded-circle bg-success w-15px h-15px"></div>
+          </div>
+        </div>
+        <div class="card-body pt-0">
+          <select class="form-select mb-2" data-control="select2" data-hide-search="true"
+            data-placeholder="Select an option" [(ngModel)]="heroe.type" (ngModelChange)="patchItem('type')"
+            [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let item of modules.propertytypes" value="{{ item }}">{{ item | titlecase }}</option>
+          </select>
+          <div class="text-muted fs-7">Seleccione y asgine el tipo, default Casa.</div>
+        </div>
+      </div>
+      <div class="card card-flush py-4">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>Propiedad</h2>
+          </div>
+          <div class="card-toolbar">
+            <div class="rounded-circle bg-success w-15px h-15px"></div>
+          </div>
+        </div>
+        <div class="card-body pt-0">
+          <select class="form-select mb-2" data-control="select2" data-hide-search="true"
+            data-placeholder="Select an option" [(ngModel)]="heroe.property" (ngModelChange)="patchItem('property')"
+            [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let item of allProperty" value="{{ item.name }}">{{ item.name | titlecase }}</option>
+          </select>
+          <div class="text-muted fs-7">Seleccione y asgine a alguna propiedad, default sin Asignar.</div>
+        </div>
+      </div>
+      <div class="card card-flush py-4">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>Status</h2>
+          </div>
+          <div class="card-toolbar">
+            <div class="rounded-circle bg-success w-15px h-15px"></div>
+          </div>
+        </div>
+        <div class="card-body pt-0">
+          <select class="form-select mb-2" data-control="select2" data-hide-search="true"
+            data-placeholder="Select an option" [(ngModel)]="heroe.status" (ngModelChange)="patchItem('status')"
+            [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let item of modules.propertystatus" value="{{ item }}">{{ item | titlecase }}</option>
+          </select>
+          <div class="text-muted fs-7">Seleccione y asgine el status, default activa.</div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+      <form (ngSubmit)="saveItem()">
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="kt_ecommerce_add_product_general" role="tab-panel">
+            <div class="d-flex flex-column gap-7 gap-lg-10">
+              <div class="card card-flush py-4">
+                <div class="card-header">
+                  <div class="card-title">
+                    <h2>General</h2>
+                  </div>
+                </div>
+                <div class="card-body pt-0">
+                  <div class="mb-10 fv-row">
+                    <label class="required form-label" for="code">Código</label>
+                    <input type="text" id="code" [(ngModel)]="heroe.code" name="code" class="form-control mb-2"
+                      placeholder="Código para el Inmueble" required />
+                    <div class="text-muted fs-7">Se requiere un código para el Inmueble y se recomienda que sea único.
+                    </div>
+                  </div>
+                  <div class="mb-10 fv-row">
+                    <label class="required form-label" for="fulladdress">Dirección completa</label>
+                    <input type="text" id="fulladdress" [(ngModel)]="heroe.fulladdress" name="fulladdress"
+                      class="form-control mb-2" placeholder="Dirección completa para el Inmueble" required />
+                    <div class="text-muted fs-7">Se requiere una dirección completa para el Inmueble y se recomienda
+                      que sea único.</div>
+                  </div>
+                  <div class="mb-10 fv-row">
+                    <label class="form-label" for="description">Descripción</label>
+                    <textarea rows="4" id="description" [(ngModel)]="heroe.description" name="description"
+                      class="form-control mb-2"></textarea>
+                    <div class="text-muted fs-7">Establezca una descripción para el producto para una mejor visibilidad.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card card-flush py-4">
+                <div class="card-header">
+                  <div class="card-title">
+                    <h2>Detalles</h2>
+                  </div>
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Niveles</label>
+                        <input type="text" class="form-control mb-2" id="floors" [(ngModel)]="heroe.floors"
+                          name="floors" />
+                        <div class="text-muted fs-7">Establezca el numero de niveles, default 1.</div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Color</label>
+                        <input type="text" class="form-control mb-2" id="color" [(ngModel)]="heroe.color"
+                          name="color" />
+                        <div class="text-muted fs-7">Establezca el color.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Cuartos</label>
+                        <input type="text" class="form-control mb-2" id="beds" [(ngModel)]="heroe.beds" name="beds" />
+                        <div class="text-muted fs-7">Establezca el numero de cuartos.</div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Baños</label>
+                        <input type="text" class="form-control mb-2" id="baths" [(ngModel)]="heroe.baths"
+                          name="baths" />
+                        <div class="text-muted fs-7">Establezca el numero de baños.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Area m2</label>
+                        <input type="text" class="form-control mb-2" id="landsize" [(ngModel)]="heroe.landsize"
+                          name="landsize" />
+                        <div class="text-muted fs-7">Establezca el valor del Area en m2.</div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Tamaños de Construcción</label>
+                        <input type="text" class="form-control mb-2" id="constructionsize"
+                          [(ngModel)]="heroe.constructionsize" name="constructionsize" />
+                        <div class="text-muted fs-7">Establezca el valor del Tamaño en m2.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Medidor de Agua</label>
+                        <input type="text" class="form-control mb-2" id="watermeter" [(ngModel)]="heroe.watermeter"
+                          name="watermeter" />
+                        <div class="text-muted fs-7">Establezca el numero del medidor.</div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="fv-row w-100 flex-md-root">
+                        <label class="form-label">Medidor de Luz</label>
+                        <input type="text" class="form-control mb-2" id="lightmeter" [(ngModel)]="heroe.lightmeter"
+                          name="lightmeter" />
+                        <div class="text-muted fs-7">Establezca el numero del medidor.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card card-flush py-4">
+                <div class="card-header">
+                  <div class="card-title">
+                    <h2>Precio</h2>
+                  </div>
+                </div>
+                <div class="card-body pt-0">
+                  <div class="mb-10 fv-row">
+                    <label class="required form-label">Precio Base</label>
+                    <input type="text" class="form-control mb-2" id="price" [(ngModel)]="heroe.price" name="price"
+                      required />
+                    <div class="text-muted fs-7">Se requiere establecer el precio del Inmueble.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <a [routerLink]="[heroe.id ? '../../' : '../']" id="kt_ecommerce_add_product_cancel"
+            class="btn btn-light me-5">Cancel</a>
+          <button type="submit" class="btn btn-primary">
+            <span class="indicator-label">{{ heroe.id ? 'Actualizar' : 'Crear' }}</span>
+            <span class="indicator-progress">Please wait...
+              <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
